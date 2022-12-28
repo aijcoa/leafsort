@@ -101,17 +101,6 @@ export const createMenu = (win: BrowserWindow, store: Store<StoreType>) => {
       click: () => win.webContents.send('menu-prev'),
       visible: false,
     },
-    {
-      label: `${i18next.t('Toggle Grid View')}`,
-      accelerator: 'H',
-      click: () => win.webContents.send('toggle-grid'),
-    },
-    {
-      label: 'Toggle Grid View (invisible)',
-      accelerator: 'Ctrl+L',
-      click: () => win.webContents.send('toggle-grid'),
-      visible: false,
-    },
     { type: 'separator' },
     {
       label: `${i18next.t('Toggle Dark Mode')}`,

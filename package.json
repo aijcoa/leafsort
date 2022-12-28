@@ -1,7 +1,7 @@
 {
-  "name": "image-sorter",
-  "productName": "image-sorter",
-  "description": "A minimalist image sorter forked from LeafView.",
+  "name": "leafsort",
+  "productName": "LeafSort",
+  "description": "A minimalist media sorter forked from LeafView.",
   "version": "1.0.0",
   "license": "MIT",
   "main": "dist/main.js",
@@ -9,10 +9,15 @@
     "dev": "rimraf dist && run-p dev:*",
     "dev:webpack": "cross-env NODE_ENV=\"development\" webpack --progress",
     "dev:electron": "wait-on ./dist/index.html ./dist/main.js && electronmon .",
-    "build": "rimraf dist && cross-env NODE_ENV=\"production\" webpack --progress",
     "package": "cross-env CSC_IDENTITY_AUTO_DISCOVERY=\"false\" ts-node scripts/build.ts",
     "release": "ts-node scripts/build.ts",
     "prebuild": "npm r --no-save @typescript-eslint/eslint-plugin @typescript-eslint/parser electronmon eslint eslint-config-prettier eslint-plugin-react eslint-plugin-react-hooks npm-run-all prettier rimraf wait-on"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "npx prettier --write",
+      "npx eslint --fix"
+    ]
   },
   "electronmon": {
     "patterns": [
@@ -46,6 +51,8 @@
     "electron": "^22.0.0",
     "electron-builder": "^23.6.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.1.0",
     "mini-css-extract-plugin": "^2.7.2",
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0",
