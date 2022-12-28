@@ -45,9 +45,4 @@ contextBridge.exposeInMainWorld('myAPI', {
     ipcRenderer.on('toggle-grid', listener);
     return () => ipcRenderer.removeAllListeners('toggle-grid');
   },
-
-  moveFile: (listener: () => Promise<void>) => {
-    ipcRenderer.on('move-file', listener);
-    return () => ipcRenderer.removeAllListeners('move-file');
-  },
 });
