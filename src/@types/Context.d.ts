@@ -35,10 +35,6 @@ export interface IElectronAPI {
   menuOpen: (
     listener: (_e: Event, filepath: string) => Promise<void>,
   ) => () => Electron.IpcRenderer;
-
-  toggleGrid: (
-    listener: (_e: Event, filepath: string) => Promise<void>,
-  ) => () => Electron.IpcRenderer;
 }
 
 export interface GalleryContextInterface {
