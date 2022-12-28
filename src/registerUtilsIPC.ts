@@ -7,7 +7,7 @@ import path from 'node:path';
 const isDarwin = process.platform === 'darwin';
 const dotfiles = isDarwin ? '.' : '._';
 
-export const registerUtilsIPC = (mainWindow: BrowserWindow) => {
+export const registerUtilsIPC = () => {
   ipcMain.handle('dirname', (_e: Event, filepath: string) => {
     return path.dirname(filepath);
   });
@@ -23,7 +23,7 @@ export const registerUtilsIPC = (mainWindow: BrowserWindow) => {
           .filter((item) => checkmime(item))
           .sort(),
       )
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   });
 
   ipcMain.handle('mime-check', (_e: Event, filepath: string) => {

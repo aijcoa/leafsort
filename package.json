@@ -1,5 +1,5 @@
 {
-  "name": "LeafSort",
+  "name": "leafsort",
   "productName": "LeafSort",
   "description": "A minimalist media sorter forked from LeafView.",
   "version": "1.0.0",
@@ -12,6 +12,12 @@
     "package": "cross-env CSC_IDENTITY_AUTO_DISCOVERY=\"false\" ts-node scripts/build.ts",
     "release": "ts-node scripts/build.ts",
     "prebuild": "npm r --no-save @typescript-eslint/eslint-plugin @typescript-eslint/parser electronmon eslint eslint-config-prettier eslint-plugin-react eslint-plugin-react-hooks npm-run-all prettier rimraf wait-on"
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "npx prettier --write",
+      "npx eslint --fix"
+    ]
   },
   "electronmon": {
     "patterns": [
@@ -45,6 +51,8 @@
     "electron": "^22.0.0",
     "electron-builder": "^23.6.0",
     "html-webpack-plugin": "^5.5.0",
+    "husky": "^8.0.2",
+    "lint-staged": "^13.1.0",
     "mini-css-extract-plugin": "^2.7.2",
     "sass": "^1.57.1",
     "sass-loader": "^13.2.0",
