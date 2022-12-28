@@ -29,8 +29,8 @@ export const App = () => {
   };
 
   useEffect(() => {
-    if (imgURL) myAPI.history(imgURL);
-  }, [imgURL]);
+    if (folderPath) myAPI.history(folderPath);
+  }, [folderPath]);
 
   useEffect(() => {
     const unlistenFn = myAPI.menuNext(onNext);
