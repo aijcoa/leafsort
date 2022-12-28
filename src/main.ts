@@ -1,4 +1,4 @@
-import { app, nativeTheme } from 'electron';
+import { app } from 'electron';
 
 import log from 'electron-log';
 import Store from 'electron-store';

@@ -27,7 +27,7 @@ export const registerMenuIPC = (mainWindow: BrowserWindow) => {
 
         return result.filePaths[0];
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.info(err));
   });
 
   ipcMain.handle('move-to-trash', async (_e: Event, filepath: string) => {

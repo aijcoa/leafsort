@@ -11,6 +11,7 @@ import { registerUtilsIPC } from './registerUtilsIPC';
 const isDarwin = process.platform === 'darwin';
 const isDevelop = process.env.NODE_ENV === 'development';
 
+// eslint-disable-next-line complexity
 export function createWindow(): BrowserWindow {
   let openfile: string | null = null;
 
@@ -41,6 +42,7 @@ export function createWindow(): BrowserWindow {
   const menu = createMenu(mainWindow, store);
   Menu.setApplicationMenu(menu);
 
+  // eslint-disable-next-line complexity
   mainWindow.webContents.once('did-finish-load', () => {
     if (!isDarwin && process.argv.length >= 2) {
       const filepath = process.argv[process.argv.length - 1];
@@ -96,10 +98,6 @@ export function createWindow(): BrowserWindow {
 }
 
 function registerMainIPC(appWindow: BrowserWindow) {
-  /**
-   * Here you can assign IPC related codes for the application window
-   * to Communicate asynchronously from the main process to renderer processes.
-   */
   registerMenuIPC(appWindow);
-  registerUtilsIPC(appWindow);
+  registerUtilsIPC();
 }

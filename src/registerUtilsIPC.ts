@@ -1,4 +1,4 @@
-import { BrowserWindow, ipcMain } from 'electron';
+import { ipcMain } from 'electron';
 import { checkmime, isVideo } from './shared/utils';
 
 import fs from 'node:fs';

@@ -4,6 +4,14 @@
     "node": true,
     "es6": true
   },
+    "overrides": [
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {
+        "no-undef": "off"
+      }
+    }
+  ],
   "parser": "@typescript-eslint/parser",
   "extends": [
     "eslint:recommended",
