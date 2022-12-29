@@ -1,5 +1,6 @@
 import { ipcMain } from 'electron';
 import { checkmime, isVideo } from './shared/utils';
+import { store } from './main';
 
 import fs from 'node:fs';
 import path from 'node:path';

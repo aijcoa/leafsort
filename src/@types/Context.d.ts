@@ -35,6 +35,12 @@ export interface IElectronAPI {
   menuOpen: (
     listener: (_e: Event, filepath: string) => Promise<void>,
   ) => () => Electron.IpcRenderer;
+
+  getAllKeyBinds: () => Promise<KeyBindType[]>;
+
+  addKeyBind: (keyBind: KeyBindType) => Promise<boolean>;
+
+  removeKeyBind: (keyBind: KeyBindType) => Promise<boolean>;
 }
 
 export interface GalleryContextInterface {
