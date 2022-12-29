@@ -40,4 +40,12 @@ contextBridge.exposeInMainWorld('myAPI', {
     ipcRenderer.on('menu-open', listener);
     return () => ipcRenderer.removeAllListeners('menu-open');
   },
+
+  getAllKeyBinds: (): Promise<boolean> => ipcRenderer.invoke('get-all-key-binds'),
+
+  addKeyBind: (keyBind: KeyBindType): Promise<boolean> =>
+    ipcRenderer.invoke('add-key-bind', keyBind),
+
+  removeKeyBind: (keyBind: KeyBindType): Promise<boolean> =>
+    ipcRenderer.invoke('remove-key-bind', keyBind),
 });

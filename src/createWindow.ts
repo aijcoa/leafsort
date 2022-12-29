@@ -7,6 +7,7 @@ import { getResourceDirectory } from './shared/utils';
 import { registerMenuIPC } from './registerMenuIPC';
 import { store } from './main';
 import { registerUtilsIPC } from './registerUtilsIPC';
+import { registerKeyBindsIPC } from './registerKeyBindsIPC';
 
 const isDarwin = process.platform === 'darwin';
 const isDevelop = process.env.NODE_ENV === 'development';
@@ -100,4 +101,5 @@ export function createWindow(): BrowserWindow {
 function registerMainIPC(appWindow: BrowserWindow) {
   registerMenuIPC(appWindow);
   registerUtilsIPC();
+  registerKeyBindsIPC();
 }

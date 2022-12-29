@@ -34,7 +34,7 @@ export const store = new Store<StoreType>({
     currentFile: undefined,
     previousFile: undefined,
     nextFile: undefined,
-    fileKeyBinds: [{ M: '/Users/fin/Pictures/foo' }],
+    keyBinds: [],
   },
 });
 
@@ -60,7 +60,6 @@ app.setAboutPanelOptions({
     : `v${app.getVersion()} (${process.versions['electron']})`,
   version: process.versions['electron'],
   iconPath: path.resolve(getResourceDirectory(isDevelop), 'images/logo.png'),
-  copyright: '© 2020 sprout2000 and other contributors',
 });
 
 app.once('window-all-closed', () => app.exit());

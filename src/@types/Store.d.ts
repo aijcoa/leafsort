@@ -10,7 +10,7 @@ declare type StoreType = {
   currentFile: FileType | undefined;
   previousFile: FileType | undefined;
   nextFile: FileType | undefined;
-  fileKeyBinds: KeyBindType[];
+  keyBinds: KeyBindType[];
 };
 
 declare type FileType = {
@@ -19,5 +19,6 @@ declare type FileType = {
 };
 
 declare type KeyBindType = {
-  [key: string]: string;
+  bind: string;
+  path: string;
 };
