@@ -12,7 +12,7 @@ export const registerMenuIPC = (mainWindow: BrowserWindow) => {
   ipcMain.handle('open-dialog', async () => {
     return dialog
       .showOpenDialog(mainWindow, {
-        properties: ['openFile'],
+        properties: ['openDirectory'],
         title: `${i18next.t('Select an image')}`,
         filters: [
           {
@@ -24,7 +24,6 @@ export const registerMenuIPC = (mainWindow: BrowserWindow) => {
       .then((result) => {
         if (result.canceled) return;
         if (path.basename(result.filePaths[0]).startsWith(dotfiles)) return;
-
         return result.filePaths[0];
       })
       .catch((err) => console.info(err));

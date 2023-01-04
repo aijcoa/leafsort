@@ -77,14 +77,17 @@ export function createWindow(): BrowserWindow {
   }
 
   if (isDevelop) {
-    const extPath = path.resolve(process.cwd(), 'devtools');
-    session.defaultSession.loadExtension(extPath, { allowFileAccess: true });
+    // const extPath = path.resolve(process.cwd(), 'devtools');
+    // session.defaultSession.loadExtension(extPath, { allowFileAccess: true });
   }
 
   mainWindow.loadFile('./dist/index.html');
 
   mainWindow.once('ready-to-show', () => {
-    if (isDevelop) mainWindow.webContents.openDevTools({ mode: 'right' });
+    if (isDevelop) {
+      mainWindow.webContents.openDevTools({ mode: 'right' });
+    }
+
     mainWindow.show();
   });
 

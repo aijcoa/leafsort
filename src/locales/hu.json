@@ -18,13 +18,13 @@
   "Close": "Bezárás",
   "Help": "Segítség",
   "About": "Névjegy",
-  "About LeafView": "LeafView névjegye",
+  "About LeafSort": "LeafSort névjegye",
   "Support URL...": "Támogatási link...",
-  "Hide LeafView": "LeafView elrejtése",
+  "Hide LeafSort": "LeafSort elrejtése",
   "Hide Others": "Mások elrejtése",
   "Show All": "Összes mutatása",
   "Quit": "Kilépés",
-  "Quit LeafView": "Kilépés a LeafView-ból",
+  "Quit LeafSort": "Kilépés a LeafSort-ból",
   "Language": "Nyelv",
-  "Warning": "To change the language, please restart LeafView."
+  "Warning": "To change the language, please restart LeafSort."
 }

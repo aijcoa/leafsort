@@ -18,13 +18,13 @@
   "Close": "Fermer",
   "Help": "Aide",
   "About": "À propos",
-  "About LeafView": "À propos de LeafView",
+  "About LeafSort": "À propos de LeafSort",
   "Support URL...": "Site du support...",
-  "Hide LeafView": "Cacher LeafView",
+  "Hide LeafSort": "Cacher LeafSort",
   "Hide Others": "Cacher les autres",
   "Show All": "Afficher tout",
   "Quit": "Quitter",
-  "Quit LeafView": "Quitter LeafView",
+  "Quit LeafSort": "Quitter LeafSort",
   "Language": "Langue",
-  "Warning": "To change the language, please restart LeafView."
+  "Warning": "To change the language, please restart LeafSort."
 }

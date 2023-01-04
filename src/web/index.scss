@@ -15,11 +15,33 @@ body,
 }
 
 body {
-  font-family: 'Chivo Mono', monospace;
+  font-family: 'JetBrains Mono-Light', monospace;
 }
 
 .card {
   fieldset {
-    padding-left: 5px;
+    padding: 0em 1em 0em 1em;
+  }
+
+  .card-body p {
+    text-align: center;
+  }
+}
+
+p {
+  color: rgb(237, 134, 134);
+  font-size: small;
+  margin-top: 0.5em;
+}
+
+.icon {
+  fill: rgb(237, 134, 134);
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:active {
+    fill: rgb(255, 255, 255);
   }
 }

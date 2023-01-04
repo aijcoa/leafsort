@@ -56,3 +56,7 @@ export interface GalleryContextInterface {
   onClickOpen(): Promise<void>;
   onMenuOpen(_e: Event, filefolderPath: string): Promise<void>;
 }
+
+export interface FileWithPath extends File {
+  path: string;
+}

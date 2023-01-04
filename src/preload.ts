@@ -47,5 +47,5 @@ contextBridge.exposeInMainWorld('myAPI', {
     ipcRenderer.invoke('add-key-bind', keyBind),
 
   removeKeyBind: (keyBind: KeyBindType): Promise<boolean> =>
-    ipcRenderer.invoke('remove-key-bind', keyBind),
+    ipcRenderer.invoke('remove-key-map', keyBind),
 });

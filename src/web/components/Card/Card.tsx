@@ -1,5 +1,4 @@
 import React, { ReactNode } from 'react';
-import './Card.scss';
 
 interface Props {
   title?: string;
