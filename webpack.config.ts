@@ -42,16 +42,13 @@ const main: Configuration = {
   ...common,
   target: 'electron-main',
   entry: {
-    main: './src/main.ts',
+    main: './src/main/main.ts',
   },
   plugins: [
     new CopyWebpackPlugin({
       patterns: [
         {
-          from:
-            process.platform === 'linux'
-              ? './assets/linux.png'
-              : './assets/icon.png',
+          from: process.platform === 'linux' ? './assets/linux.png' : './assets/icon.png',
           to: './images/logo.png',
         },
       ],
@@ -63,7 +60,7 @@ const preload: Configuration = {
   ...common,
   target: 'electron-preload',
   entry: {
-    preload: './src/preload.ts',
+    preload: './src/main/preload.ts',
   },
 };
 

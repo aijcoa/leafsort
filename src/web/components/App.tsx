@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { GalleryContextInterface } from '../../@types/Context';
+import { GalleryContextInterface } from '../../main/@types/Context';
 import { GalleryContext } from '../providers/GalleryContext';
 
 import './App.scss';
