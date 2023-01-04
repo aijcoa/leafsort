@@ -154,12 +154,12 @@ export const createMenu = (win: BrowserWindow, store: Store<StoreType>) => {
   const helpSub: MenuItemConstructorOptions[] = [
     {
       label: `${i18next.t('Support URL...')}`,
-      click: async () => await shell.openExternal('https://github.com/sprout2000/leafview/#readme'),
+      click: async () => await shell.openExternal('https://github.com/sprout2000/leafSort/#readme'),
     },
   ];
 
   const aboutItem: MenuItemConstructorOptions = {
-    label: `${i18next.t(isDarwin ? 'About LeafView' : 'About')}`,
+    label: `${i18next.t(isDarwin ? 'About LeafSort' : 'About')}`,
     accelerator: 'CmdOrCtrl+I',
     click: () => app.showAboutPanel(),
   };
@@ -250,12 +250,12 @@ export const createMenu = (win: BrowserWindow, store: Store<StoreType>) => {
 
   if (isDarwin) {
     template.unshift({
-      label: 'LeafView',
+      label: 'LeafSort',
       submenu: [
         aboutItem,
         { type: 'separator' },
         {
-          label: `${i18next.t('Hide LeafView')}`,
+          label: `${i18next.t('Hide LeafSort')}`,
           role: 'hide',
         },
         {
@@ -268,7 +268,7 @@ export const createMenu = (win: BrowserWindow, store: Store<StoreType>) => {
         },
         { type: 'separator' },
         {
-          label: `${i18next.t('Quit LeafView')}`,
+          label: `${i18next.t('Quit LeafSort')}`,
           role: 'quit',
         },
       ],

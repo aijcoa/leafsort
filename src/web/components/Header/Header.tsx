@@ -13,7 +13,7 @@ export const Header = memo((props: Props) => {
   const { folderPath } = props;
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
   const { onClickOpen } = galleryContext;
-  const title: string = !folderPath ? 'image-sorter' : `sorting`;
+  const title: string = !folderPath ? 'Leaf | Sort' : `Sorting...`;
 
   return (
     <Card bodyClasses="header" classes="col-xs-12 h-10 flex" title={title}>

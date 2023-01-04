@@ -17,14 +17,14 @@
   "Bring All to Front": "Przesuń wszystko na wierzch",
   "Close": "Zamknij",
   "Help": "Pomoc",
-  "About": "O LeafView",
-  "About LeafView": "O LeafView",
+  "About": "O LeafSort",
+  "About LeafSort": "O LeafSort",
   "Support URL...": "URL pomocy...",
-  "Hide LeafView": "Ukryj LeafView",
+  "Hide LeafSort": "Ukryj LeafSort",
   "Hide Others": "Ukryj inne",
   "Show All": "Pokaż wszystko",
-  "Quit": "Zamknij LeafView",
-  "Quit LeafView": "Zamknij LeafView",
+  "Quit": "Zamknij LeafSort",
+  "Quit LeafSort": "Zamknij LeafSort",
   "Language": "Język",
-  "Warning": "To change the language, please restart LeafView."
+  "Warning": "To change the language, please restart LeafSort."
 }

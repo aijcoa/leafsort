@@ -1,4 +1,3 @@
-/* eslint-disable complexity */
 import { useContext, useEffect, useState } from 'react';
 import { GalleryContextInterface } from '../../@types/Context';
 import { GalleryContext } from '../providers/GalleryContext';
@@ -61,7 +60,7 @@ export const App = () => {
   }, [onMenuOpen]);
 
   useEffect(() => {
-    const title = !folderPath ? 'image-sorter' : `Sorting - ${folderPath}`;
+    const title = !folderPath ? 'Leaf | Sort' : `Sorting - ${folderPath}`;
     updateTitle(title);
   }, [folderPath]);
 

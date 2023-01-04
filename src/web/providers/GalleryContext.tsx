@@ -84,15 +84,6 @@ export const GalleryContextProvider = (props: {
     }
   }, [folderPath]);
 
-  const onClickOpen = useCallback(async () => {
-    const filefolderPath = await myAPI.openDialog();
-    if (!filefolderPath) return;
-
-    onMenuOpen(null, filefolderPath);
-
-    setFolderPath(filefolderPath);
-  }, []);
-
   const onMenuOpen = useCallback(async (_e: Event | null, filefolderPath: string) => {
     if (!filefolderPath) return;
 
@@ -108,6 +99,15 @@ export const GalleryContextProvider = (props: {
     setImgList(imgs);
     setImgURL(imgs[0]);
   }, []);
+
+  const onClickOpen = useCallback(async () => {
+    const filefolderPath = await myAPI.openDialog();
+    if (!filefolderPath) return;
+
+    onMenuOpen(null, filefolderPath);
+
+    setFolderPath(filefolderPath);
+  }, [onMenuOpen]);
 
   return (
     <GalleryContext.Provider
