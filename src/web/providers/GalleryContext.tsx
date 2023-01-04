@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { createContext, useCallback, useState } from 'react';
-import { GalleryContextInterface } from '../../@types/Context';
+import { GalleryContextInterface } from '../../main/@types/Context';
 
 const { myAPI } = window;
 

@@ -1,5 +1,5 @@
 import { memo, useContext } from 'react';
-import { GalleryContextInterface } from '../../../@types/Context';
+import { GalleryContextInterface } from '../../../main/@types/Context';
 import { GalleryContext } from '../../providers/GalleryContext';
 import { Card } from '../Card/Card';
 import { FolderOpen } from '../Icons/FolderOpen';
