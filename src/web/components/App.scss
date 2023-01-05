@@ -1,7 +1,7 @@
-@import '../styles/variables';
+@import '/assets/styles/variables';
 @import '../../../node_modules/bootstrap/scss/bootstrap.scss';
-@import '../styles/bootswatch';
-@import '../styles/fonts';
+@import '/assets/styles/bootswatch';
+@import '/assets/styles/fonts';
 
 :root {
   @media (prefers-color-scheme: dark) {
