@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 
 export const Trash = memo(() => (
   <svg
-    width="20"
+    width="13"
     height="22"
     viewBox="0 0 20 22"
     className="svg"

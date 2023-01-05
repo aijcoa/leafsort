@@ -1,0 +1,51 @@
+table.key-mapping {
+  margin-top: 0.5em;
+  box-shadow: none;
+
+  col.path-column {
+    padding-left: 1em;
+  }
+
+  td,
+  th {
+    text-align: left;
+    box-shadow: none;
+  }
+
+  th {
+    text-transform: capitalize;
+    padding: 0;
+    border: 0;
+    color: rgb(237, 134, 134);
+  }
+
+  td {
+    padding: 0.275em 0.175em;
+    border: 0;
+  }
+
+  .bind {
+    padding-left: 0.5em;
+    margin: 0.4em 0.5em 0 0;
+  }
+
+  .path {
+    font-size: 0.9em;
+  }
+
+  tr {
+    &:last-of-type {
+      border-top: 1px solid rgb(237, 134, 134);
+    }
+  }
+}
+
+.no-binds {
+  position: absolute;
+  top: 45%;
+  left: 40%;
+}
+
+code {
+  line-height: 2;
+}
