@@ -1,9 +1,8 @@
 import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { setLocales } from '../setLocales';
+import { setLocales } from '../main/setLocales';
 import { App } from './components/App';
 import { GalleryContextProvider } from './providers/GalleryContext';
-import './index.scss';
 
 const initLocale = async () => {
   const locale = await window.myAPI.getLocale();
