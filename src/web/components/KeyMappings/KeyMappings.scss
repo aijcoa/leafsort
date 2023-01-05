@@ -20,8 +20,7 @@ table.key-mapping {
   }
 
   td {
-    position: relative;
-    padding: 0.3em 0.5em 0.3em 0;
+    padding: 0.275em 0.175em;
     border: 0;
   }
 
@@ -39,26 +38,14 @@ table.key-mapping {
       border-top: 1px solid rgb(237, 134, 134);
     }
   }
-
-  .add-key-bind {
-    td {
-      text-align: center;
-
-      .icon {
-        margin-left: 0.5em;
-      }
-    }
-  }
-
-  .icon {
-    text-align: center;
-  }
 }
 
-.folder {
-  .icon {
-    position: absolute;
-    top: 40%;
-    left: 25%;
-  }
+.no-binds {
+  position: absolute;
+  top: 45%;
+  left: 40%;
+}
+
+code {
+  line-height: 2;
 }

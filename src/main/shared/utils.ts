@@ -2,7 +2,7 @@ import path from 'path';
 import mime from 'mime-types';
 
 export const checkmime = (filepath: string) => {
-  const regexp = new RegExp(/bmp|ico|gif|jpeg|png|svg|webp/);
+  const regexp = new RegExp(/bmp|ico|gif|jpeg|png|svg|webp|webm|mp4/);
   const mimetype = mime.lookup(filepath);
 
   return (mimetype && regexp.test(mimetype)) || false;
