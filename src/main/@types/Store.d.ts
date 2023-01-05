@@ -19,6 +19,6 @@ declare type FileType = {
 };
 
 declare type KeyBindType = {
-  accelerator: string | undefined;
-  path: string | undefined;
+  accelerator?: string;
+  path?: string;
 };

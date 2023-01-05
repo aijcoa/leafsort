@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import { AddKeyBindModal } from '../AddKeyBindModal/AddKeyBindModal';
 import { Card } from '../Card/Card';
-import { FolderOpen } from '../Icons/FolderOpen';
 import { Plus } from '../Icons/Plus';
 import { KeyMap } from '../KeyMap/KeyMap';
 import './KeyMappings.scss';
@@ -9,6 +9,7 @@ const { myAPI } = window;
 
 export const KeyMappings = () => {
   const [keyMappings, setKeyMappings] = useState<KeyBindType[]>([]);
+  const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
   const getAllKeyBinds = useCallback(() => {
     myAPI.getAllKeyBinds().then((result) => {
@@ -18,79 +19,64 @@ export const KeyMappings = () => {
     });
   }, []);
 
-  const handleAddKeyBind = useCallback(() => {
-    const emptyKeyBind = { path: undefined, accelerator: undefined };
-    setKeyMappings((mappings) => [...mappings, emptyKeyBind]);
-  }, []);
+  const handleAddKeyBind = useCallback(
+    (keyBind: KeyBindType) => {
+      myAPI.addKeyBind(keyBind).then(() => {
+        setKeyMappings((mappings) => [...mappings, keyBind]);
+        getAllKeyBinds();
+      });
+    },
+    [getAllKeyBinds],
+  );
 
-  const addKeyBind = useCallback((bind: KeyBindType) => {
-    myAPI
-      .addKeyBind(bind)
-      .then(() => getAllKeyBinds())
-      .catch(() => alert('Bind already in use.'));
-  }, []);
-
-  const removeKeyBind = useCallback((bind: KeyBindType) => {
-    myAPI.removeKeyBind(bind).then(() => getAllKeyBinds());
-  }, []);
-
-  const updateKeyBind = useCallback((index: number, bind: KeyBindType) => {
-    console.info('index: ', index);
-    console.info('bind: ', bind);
-  }, []);
-
-  const updateKeyPath = useCallback((bind: KeyBindType) => {
-    //
-  }, []);
+  const removeKeyBind = useCallback(
+    (bind: KeyBindType) => {
+      myAPI.removeKeyBind(bind).then(() => getAllKeyBinds());
+    },
+    [getAllKeyBinds],
+  );
 
   useEffect(() => {
     getAllKeyBinds();
   }, [getAllKeyBinds]);
 
-  window.onkeydown = (event: KeyboardEvent) => {
-    if (keyMappings.findIndex((k: KeyBindType) => k.accelerator === event.key)) {
-      console.info('triggered existing key bind');
-    }
-  };
-
   return (
-    <Card classes="col-10 h-100" title="Key | Path">
-      {/* <button onClick ={() => addKeyBind()}>Add Key Bind</button> */}
-
-      {keyMappings.length ? (
-        <table className="table key-mapping table-hover">
-          <tbody>
-            {keyMappings &&
-              keyMappings.map((keyMap, index) => (
-                <KeyMap
-                  key={index}
-                  index={index}
-                  keyMap={keyMap}
-                  onUpdateKeyBind={updateKeyBind}
-                  onRemoveKeyBind={removeKeyBind}
-                  onSaveKeyBind={addKeyBind}
-                />
-              ))}
-            <tr className="add-key-bind">
-              <td colSpan={2} className="path">
-                Add a key bind
-              </td>
-              <td>
-                <div onClick={handleAddKeyBind} className="icon" title="Add key bind...">
-                  <Plus />
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      ) : (
-        <div className="folder">
-          <div className="icon" title="Open..." onClick={handleAddKeyBind}>
-            <FolderOpen size="large" />
+    <>
+      <Card classes="col-10 h-100" title="Key | Path">
+        {keyMappings.length ? (
+          <table className="table key-mapping table-hover">
+            <tbody>
+              {keyMappings &&
+                keyMappings.map((keyMap, index) => (
+                  <KeyMap key={index} keyMap={keyMap} onRemoveKeyBind={removeKeyBind} />
+                ))}
+              <tr className="add-key-bind">
+                <td colSpan={2} className="text-center path">
+                  Add key mapping
+                </td>
+                <td>
+                  <div onClick={() => setModalOpen(true)} className="icon" title="Add key bind">
+                    <Plus size="small" />
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        ) : (
+          <div className="icon no-binds" title="Add key bind" onClick={() => setModalOpen(true)}>
+            <Plus size="medium" />
           </div>
-        </div>
+        )}
+      </Card>
+
+      {isModalOpen && (
+        <AddKeyBindModal
+          onSave={handleAddKeyBind}
+          isOpen={isModalOpen}
+          onClose={() => setModalOpen(false)}
+        />
       )}
-    </Card>
+    </>
   );
 };
 

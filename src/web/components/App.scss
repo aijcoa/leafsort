@@ -1,3 +1,8 @@
+@import '../styles/variables';
+@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../styles/bootswatch';
+@import '../styles/fonts';
+
 :root {
   @media (prefers-color-scheme: dark) {
     body {
@@ -12,16 +17,36 @@
   }
 }
 
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body,
+#root {
+  font-family: 'JetBrains Mono-Light', monospace;
+  height: 100%;
+}
+
 .image-container {
-  overflow: hidden;
   user-select: none;
-  position: relative;
 }
 
-.sidebar {
-  background: white;
+p {
+  color: rgb(237, 134, 134);
+  font-size: small;
+  margin-top: 0.5em;
 }
 
-input {
-  max-width: 50px;
+.icon {
+  fill: rgb(237, 134, 134);
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:active {
+    fill: rgb(255, 255, 255);
+  }
 }

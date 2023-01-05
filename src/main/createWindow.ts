@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu, nativeTheme, session } from 'electron';
+import { app, BrowserWindow, Menu, nativeTheme } from 'electron';
 
 import path from 'node:path';
 

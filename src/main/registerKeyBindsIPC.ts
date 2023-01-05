@@ -1,5 +1,4 @@
 import { ipcMain } from 'electron';
-import { hasUncaughtExceptionCaptureCallback } from 'process';
 import { BindConflictException } from './exceptions/BindConflictException';
 import { store } from './main';
 

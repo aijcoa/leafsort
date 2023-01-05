@@ -16,7 +16,7 @@ interface Props {
 export const Gallery = memo((props: Props) => {
   const { isDarwin, myAPI, setFolderPath, imgURL } = props;
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
-  const { onClickOpen, setImgURL } = galleryContext;
+  const { onClickOpen, setImgURL, setImgList } = galleryContext;
 
   const preventDefault = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -31,9 +31,16 @@ export const Gallery = memo((props: Props) => {
 
       if (file.name.startsWith('.')) return;
 
-      const dirName = await myAPI.dirname(file.path);
-      setFolderPath(dirName);
-      setImgURL(file.path);
+      const imgs = await myAPI.readdir(file.path);
+
+      if (!imgs || imgs.length === 0) {
+        window.location.reload();
+        return;
+      }
+
+      setFolderPath(file.path);
+      setImgList(imgs);
+      setImgURL(imgs[0]);
     }
   };
 

@@ -49,26 +49,18 @@ export const GalleryContextProvider = (props: {
     }
   }, [imgList, imgURL]);
 
-  // eslint-disable-next-line complexity
   const onRemove = useCallback(async () => {
-    if (!folderPath) return;
+    const list = await myAPI.readdir(folderPath);
 
-    const dir = await myAPI.dirname(folderPath);
-    if (!dir) {
+    if (!list || list.length === 0) {
       window.location.reload();
       return;
     }
 
-    const list = await myAPI.readdir(dir);
-    if (!list || list.length === 0 || !list.includes(folderPath)) {
-      window.location.reload();
-      return;
-    }
+    const index = list.indexOf(imgURL);
 
-    const index = list.indexOf(folderPath);
-
-    await myAPI.moveToTrash(folderPath);
-    const newList = await myAPI.readdir(dir);
+    await myAPI.moveToTrash(imgURL);
+    const newList = await myAPI.readdir(folderPath);
 
     if (!newList || newList.length === 0) {
       window.location.reload();
@@ -78,11 +70,11 @@ export const GalleryContextProvider = (props: {
     setImgList(newList);
 
     if (index > newList.length - 1) {
-      setFolderPath(newList[0]);
+      setImgURL(newList[0]);
     } else {
-      setFolderPath(newList[index]);
+      setImgURL(newList[index]);
     }
-  }, [folderPath]);
+  }, [folderPath, imgURL]);
 
   const onMenuOpen = useCallback(async (_e: Event | null, filefolderPath: string) => {
     if (!filefolderPath) return;
