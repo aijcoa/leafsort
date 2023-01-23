@@ -3,17 +3,11 @@ import { BindConflictException } from './exceptions/BindConflictException';
 import { store } from './main';
 
 export const registerKeyBindsIPC = () => {
-  ipcMain.handle('get-all-key-binds', () => {
-    try {
-      return store.get('keyBinds', [] as KeyBindType[]);
-    } catch (err) {
-      console.error(err);
-
-      return false;
-    }
+  ipcMain.handle('get-all-key-binds', (): KeyBindType[] => {
+    return store.get('keyBinds', [] as KeyBindType[]);
   });
 
-  ipcMain.handle('add-key-bind', (_e: Event, keyBind: KeyBindType): boolean => {
+  ipcMain.handle('store-key-bind', (_e: Event, keyBind: KeyBindType): void => {
     const keyBinds: KeyBindType[] = store.get('keyBinds');
 
     if (keyBinds.find((k) => k.accelerator === keyBind.accelerator)) {
@@ -21,12 +15,10 @@ export const registerKeyBindsIPC = () => {
     } else {
       keyBinds.push(keyBind);
       store.set('keyBinds', keyBinds);
-
-      return true;
     }
   });
 
-  ipcMain.handle('remove-key-map', (_e: Event, keyBind: KeyBindType): boolean => {
+  ipcMain.handle('delete-key-bind', (_e: Event, keyBind: KeyBindType): void => {
     try {
       const keyBinds: KeyBindType[] = store.get('keyBinds');
       const index = keyBinds.findIndex((k: KeyBindType) => k.accelerator === keyBind.accelerator);
@@ -35,14 +27,8 @@ export const registerKeyBindsIPC = () => {
         keyBinds.splice(index, 1);
         store.set('keyBinds', keyBinds);
       }
-
-      return true;
     } catch (err) {
       console.error(err);
-
-      return false;
     }
   });
-
-  // const keyBind = store.get('keyBinds').find((keyBind) => keyBind.bind === 'J');
 };
