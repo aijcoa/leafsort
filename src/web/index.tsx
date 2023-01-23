@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { setLocales } from '../main/setLocales';
 import { App } from './components/App';
 import { GalleryContextProvider } from './providers/GalleryContext';
+import { KeyBindContextProvider } from './providers/KeyBindContext';
 
 const initLocale = async () => {
   const locale = await window.myAPI.getLocale();
@@ -14,7 +15,9 @@ initLocale();
 createRoot(document.getElementById('root') as Element).render(
   <StrictMode>
     <GalleryContextProvider>
-      <App />
+      <KeyBindContextProvider>
+        <App />
+      </KeyBindContextProvider>
     </GalleryContextProvider>
   </StrictMode>,
 );

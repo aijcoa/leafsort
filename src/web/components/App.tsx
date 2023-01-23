@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
-import { GalleryContextInterface } from '../../main/@types/Context';
+import { GalleryContextInterface, KeyBindContextInterface } from '../../main/@types/Context';
 import { GalleryContext } from '../providers/GalleryContext';
+import { KeyBindContext } from '../providers/KeyBindContext';
 
 import './App.scss';
 import { Gallery } from './Gallery/Gallery';
@@ -11,11 +12,15 @@ const { myAPI } = window;
 
 export const App = () => {
   const isDarwin = navigator.userAgentData.platform === 'macOS';
+
+  const [currentImage, setCurrentImage] = useState<number | null>(null);
+
+  const keyBindContext = useContext<KeyBindContextInterface>(KeyBindContext);
+  const { getAllKeyBinds, registerKeyBinds } = keyBindContext;
+
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
   const { onNext, onPrevious, folderPath, setFolderPath, onMenuOpen, onRemove, imgURL, imgList } =
     galleryContext;
-
-  const [currentImage, setCurrentImage] = useState<number | null>(null);
 
   useEffect(() => {
     if (imgList.length) {
@@ -63,6 +68,20 @@ export const App = () => {
     const title = !folderPath ? 'Leaf | Sort' : `Sorting - ${folderPath}`;
     updateTitle(title);
   }, [folderPath]);
+
+  useEffect(() => {
+    if (imgURL) {
+      myAPI.setCurrentFile(imgURL);
+    }
+  }, [imgURL]);
+
+  useEffect(() => {
+    if (!imgURL) return;
+
+    getAllKeyBinds().then((binds) => {
+      registerKeyBinds(binds);
+    });
+  }, [getAllKeyBinds, imgURL, registerKeyBinds]);
 
   return (
     <div className="row gx-3 h-100 justify-content-center">

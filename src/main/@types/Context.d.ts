@@ -3,6 +3,13 @@ declare global {
   interface Window {
     myAPI: IElectronAPI;
   }
+
+  /**
+   * https://stackoverflow.com/a/72680192/2130426
+   */
+  interface FileWithPath extends File {
+    path: string;
+  }
 }
 
 export interface IElectronAPI {
@@ -10,21 +17,23 @@ export interface IElectronAPI {
 
   contextMenu: () => Promise<void>;
 
-  history: (filepath: string) => Promise<void>;
+  history: (filePath: string) => Promise<void>;
 
-  mimecheck: (filepath: string) => Promise<boolean>;
+  mimecheck: (filePath: string) => Promise<boolean>;
 
-  isVideo: (filepath: string) => Promise<boolean>;
+  isVideo: (filePath: string) => Promise<boolean>;
 
-  dirname: (filepath: string) => Promise<string>;
+  dirname: (filePath: string) => Promise<string>;
 
   readdir: (dirpath: string) => Promise<void | string[]>;
 
-  moveToTrash: (filepath: string) => Promise<void>;
+  moveToTrash: (filePath: string) => Promise<void>;
+
+  moveFile: (filePath: string, destinationPath: string) => Promise<void>;
 
   openDialog: () => Promise<string | void | undefined>;
 
-  updateTitle: (filepath: string) => Promise<void>;
+  updateTitle: (filePath: string) => Promise<void>;
 
   menuNext: (listener: () => Promise<void>) => () => Electron.IpcRenderer;
 
@@ -33,14 +42,16 @@ export interface IElectronAPI {
   menuRemove: (listener: () => Promise<void>) => () => Electron.IpcRenderer;
 
   menuOpen: (
-    listener: (_e: Event, filepath: string) => Promise<void>,
+    listener: (_e: Event, filePath: string) => Promise<void>,
   ) => () => Electron.IpcRenderer;
 
   getAllKeyBinds: () => Promise<KeyBindType[]>;
 
-  addKeyBind: (keyBind: KeyBindType) => Promise<boolean>;
+  storeKeyBind: (keyBind: KeyBindType) => Promise<void>;
 
-  removeKeyBind: (keyBind: KeyBindType) => Promise<boolean>;
+  deleteKeyBind: (keyBind: KeyBindType) => Promise<void>;
+
+  setCurrentFile: (currnetImg: string) => Promise<void>;
 }
 
 export interface GalleryContextInterface {
@@ -53,10 +64,15 @@ export interface GalleryContextInterface {
   onNext(): Promise<void>;
   onPrevious(): Promise<void>;
   onRemove(): Promise<void>;
+  onMove(destinationPath: string): Promise<void>;
   onClickOpen(): Promise<void>;
   onMenuOpen(_e: Event, filefolderPath: string): Promise<void>;
 }
 
-export interface FileWithPath extends File {
-  path: string;
+export interface KeyBindContextInterface {
+  keyBinds: KeyBindType[];
+  setKeyBinds(keyBinds: KeyBindType[]): void;
+  getAllKeyBinds: () => Promise<KeyBindType[]>;
+  registerKeyBinds: (keyBind: KeyBindType[]) => Promise<void>;
+  unregisterKeyBind: (keyBind: KeyBindType) => Promise<void>;
 }
