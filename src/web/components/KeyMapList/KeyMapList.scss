@@ -12,6 +12,12 @@ table.key-mapping {
     box-shadow: none;
   }
 
+  tr {
+    &:last-of-type {
+      border-top: 1px solid rgb(237, 134, 134);
+    }
+  }
+
   th {
     text-transform: capitalize;
     padding: 0;
@@ -31,12 +37,6 @@ table.key-mapping {
 
   .path {
     font-size: 0.9em;
-  }
-
-  tr {
-    &:last-of-type {
-      border-top: 1px solid rgb(237, 134, 134);
-    }
   }
 }
 
