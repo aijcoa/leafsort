@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { Card } from '../Card/Card';
-import { KeyMappings } from '../KeyMappings/KeyMappings';
+import { KeyMapList } from '../KeyMapList/KeyMapList';
 
 interface Props {
   imagesSorted?: number | null;
@@ -24,7 +24,7 @@ export const Sidebar = memo((props: Props) => {
         </Card>
       </div>
       <div className="row h-60">
-        <KeyMappings />
+        <KeyMapList />
       </div>
       <div className="row h-30">
         <Card classes="col-10 h-100" title="Log"></Card>

@@ -5,11 +5,11 @@ import { AddKeyBindModal } from '../AddKeyBindModal/AddKeyBindModal';
 import { Card } from '../Card/Card';
 import { Plus } from '../Icons/Plus';
 import { KeyMap } from '../KeyMap/KeyMap';
-import './KeyMappings.scss';
+import './KeyMapList.scss';
 
 const { myAPI } = window;
 
-export const KeyMappings = () => {
+export const KeyMapList = () => {
   const keyBindContext = useContext<KeyBindContextInterface>(KeyBindContext);
   const { keyBinds, getAllKeyBinds } = keyBindContext;
 
@@ -62,4 +62,4 @@ export const KeyMappings = () => {
   );
 };
 
-export default KeyMappings;
+export default KeyMapList;
