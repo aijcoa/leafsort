@@ -1,4 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
+import { KeyBindContextInterface } from '../../../main/@types/Context';
+import { KeyBindContext } from '../../providers/KeyBindContext';
 import { AddKeyBindModal } from '../AddKeyBindModal/AddKeyBindModal';
 import { Card } from '../Card/Card';
 import { Plus } from '../Icons/Plus';
@@ -8,46 +10,26 @@ import './KeyMappings.scss';
 const { myAPI } = window;
 
 export const KeyMappings = () => {
-  const [keyMappings, setKeyMappings] = useState<KeyBindType[]>([]);
+  const keyBindContext = useContext<KeyBindContextInterface>(KeyBindContext);
+  const { keyBinds, getAllKeyBinds } = keyBindContext;
+
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
-
-  const getAllKeyBinds = useCallback(() => {
-    myAPI.getAllKeyBinds().then((result) => {
-      if (result) {
-        setKeyMappings(result);
-      }
-    });
-  }, []);
-
-  const handleAddKeyBind = useCallback(
-    (keyBind: KeyBindType) => {
-      myAPI.addKeyBind(keyBind).then(() => {
-        setKeyMappings((mappings) => [...mappings, keyBind]);
-        getAllKeyBinds();
-      });
-    },
-    [getAllKeyBinds],
-  );
 
   const removeKeyBind = useCallback(
     (bind: KeyBindType) => {
-      myAPI.removeKeyBind(bind).then(() => getAllKeyBinds());
+      myAPI.deleteKeyBind(bind).then(() => getAllKeyBinds());
     },
     [getAllKeyBinds],
   );
-
-  useEffect(() => {
-    getAllKeyBinds();
-  }, [getAllKeyBinds]);
 
   return (
     <>
       <Card classes="col-10 h-100" title="Key | Path">
-        {keyMappings.length ? (
+        {keyBinds.length ? (
           <table className="table key-mapping table-hover">
             <tbody>
-              {keyMappings &&
-                keyMappings.map((keyMap, index) => (
+              {keyBinds &&
+                keyBinds.map((keyMap, index) => (
                   <KeyMap key={index} keyMap={keyMap} onRemoveKeyBind={removeKeyBind} />
                 ))}
               <tr className="add-key-bind">
@@ -71,7 +53,7 @@ export const KeyMappings = () => {
 
       {isModalOpen && (
         <AddKeyBindModal
-          onSave={handleAddKeyBind}
+          onSave={getAllKeyBinds}
           isOpen={isModalOpen}
           onClose={() => setModalOpen(false)}
         />

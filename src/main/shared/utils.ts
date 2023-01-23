@@ -1,9 +1,9 @@
 import path from 'path';
 import mime from 'mime-types';
 
-export const checkmime = (filepath: string) => {
+export const checkmime = (filePath: string) => {
   const regexp = new RegExp(/bmp|ico|gif|jpeg|png|svg|webp|webm|mp4/);
-  const mimetype = mime.lookup(filepath);
+  const mimetype = mime.lookup(filePath);
 
   return (mimetype && regexp.test(mimetype)) || false;
 };
@@ -14,9 +14,9 @@ export const getResourceDirectory = (isDevelop: boolean) => {
     : path.join(process.resourcesPath, 'app.asar.unpacked', 'dist');
 };
 
-export const isVideo = (filepath: string) => {
+export const isVideo = (filePath: string) => {
   const regexp = new RegExp(/webm|mp4/);
-  const mimetype = mime.lookup(filepath);
+  const mimetype = mime.lookup(filePath);
 
   return (mimetype && regexp.test(mimetype)) || false;
 };

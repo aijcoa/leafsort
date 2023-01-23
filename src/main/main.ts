@@ -39,9 +39,9 @@ export const store = new Store<StoreType>({
 });
 
 app.once('will-finish-launching', () => {
-  app.once('open-file', (e, filepath) => {
+  app.once('open-file', (e, filePath) => {
     e.preventDefault();
-    openfile = filepath;
+    openfile = filePath;
   });
 });
 

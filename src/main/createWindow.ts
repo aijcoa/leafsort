@@ -46,10 +46,10 @@ export function createWindow(): BrowserWindow {
   // eslint-disable-next-line complexity
   mainWindow.webContents.once('did-finish-load', () => {
     if (!isDarwin && process.argv.length >= 2) {
-      const filepath = process.argv[process.argv.length - 1];
-      if (path.basename(filepath).startsWith(dotfiles)) return;
+      const filePath = process.argv[process.argv.length - 1];
+      if (path.basename(filePath).startsWith(dotfiles)) return;
 
-      mainWindow.webContents.send('menu-open', filepath);
+      mainWindow.webContents.send('menu-open', filePath);
     }
 
     if (isDarwin && openfile) {
@@ -64,21 +64,16 @@ export function createWindow(): BrowserWindow {
   });
 
   if (isDarwin) {
-    app.on('open-file', (e, filepath) => {
+    app.on('open-file', (e, filePath) => {
       e.preventDefault();
 
       if (mainWindow.isMinimized()) mainWindow.restore();
       mainWindow.focus();
 
-      if (path.basename(filepath).startsWith(dotfiles)) return;
+      if (path.basename(filePath).startsWith(dotfiles)) return;
 
-      mainWindow.webContents.send('menu-open', filepath);
+      mainWindow.webContents.send('menu-open', filePath);
     });
-  }
-
-  if (isDevelop) {
-    // const extPath = path.resolve(process.cwd(), 'devtools');
-    // session.defaultSession.loadExtension(extPath, { allowFileAccess: true });
   }
 
   mainWindow.loadFile('./dist/index.html');

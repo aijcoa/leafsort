@@ -5,21 +5,33 @@ contextBridge.exposeInMainWorld('myAPI', {
 
   contextMenu: (): Promise<void> => ipcRenderer.invoke('show-context-menu'),
 
-  history: (filepath: string): Promise<void> => ipcRenderer.invoke('file-history', filepath),
+  history: (filePath: string): Promise<void> => ipcRenderer.invoke('file-history', filePath),
 
-  mimecheck: (filepath: string): Promise<boolean> => ipcRenderer.invoke('mime-check', filepath),
+  mimecheck: (filePath: string): Promise<boolean> => ipcRenderer.invoke('mime-check', filePath),
 
-  isVideo: (filepath: string): Promise<boolean> => ipcRenderer.invoke('is-video', filepath),
+  isVideo: (filePath: string): Promise<boolean> => ipcRenderer.invoke('is-video', filePath),
 
-  dirname: (filepath: string): Promise<string> => ipcRenderer.invoke('dirname', filepath),
+  dirname: (filePath: string): Promise<string> => ipcRenderer.invoke('dirname', filePath),
 
   readdir: (dirpath: string): Promise<void | string[]> => ipcRenderer.invoke('readdir', dirpath),
 
-  moveToTrash: (filepath: string): Promise<void> => ipcRenderer.invoke('move-to-trash', filepath),
+  moveToTrash: (filePath: string): Promise<void> => ipcRenderer.invoke('move-to-trash', filePath),
+
+  moveFile: (filePath: string, destinationPath: string): Promise<void> =>
+    ipcRenderer.invoke('move-file', filePath, destinationPath),
 
   openDialog: (): Promise<string | void | undefined> => ipcRenderer.invoke('open-dialog'),
 
-  updateTitle: (filepath: string): Promise<void> => ipcRenderer.invoke('update-title', filepath),
+  updateTitle: (filePath: string): Promise<void> => ipcRenderer.invoke('update-title', filePath),
+
+  storeKeyBind: async (keyBind: KeyBindType): Promise<void> =>
+    ipcRenderer.invoke('store-key-bind', keyBind),
+
+  deleteKeyBind: async (keyBind: KeyBindType): Promise<void> =>
+    ipcRenderer.invoke('delete-key-bind', keyBind),
+
+  setCurrentFile: async (currentFile: string): Promise<void> =>
+    ipcRenderer.invoke('set-current-file', currentFile),
 
   menuNext: (listener: () => Promise<void>) => {
     ipcRenderer.on('menu-next', listener);
@@ -36,16 +48,10 @@ contextBridge.exposeInMainWorld('myAPI', {
     return () => ipcRenderer.removeAllListeners('menu-remove');
   },
 
-  menuOpen: (listener: (_e: Event, filepath: string) => Promise<void>) => {
+  menuOpen: (listener: (_e: Event, filePath: string) => Promise<void>) => {
     ipcRenderer.on('menu-open', listener);
     return () => ipcRenderer.removeAllListeners('menu-open');
   },
 
-  getAllKeyBinds: (): Promise<boolean> => ipcRenderer.invoke('get-all-key-binds'),
-
-  addKeyBind: async (keyBind: KeyBindType): Promise<boolean> =>
-    ipcRenderer.invoke('add-key-bind', keyBind),
-
-  removeKeyBind: async (keyBind: KeyBindType): Promise<boolean> =>
-    ipcRenderer.invoke('remove-key-map', keyBind),
+  getAllKeyBinds: (): Promise<KeyBindType[]> => ipcRenderer.invoke('get-all-key-binds'),
 });

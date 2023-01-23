@@ -11,7 +11,10 @@ interface Props {
 export const KeyMap = memo((props: Props) => {
   const { keyMap, onRemoveKeyBind } = props;
 
-  const getFolderFromPath = (path: string) => path.match(/([^/]*)\/*$/)[1];
+  const getFolderFromPath = (path: string) => {
+    const match = path.match(/([^/]+)$/);
+    return match ? match[0] : path;
+  };
 
   return (
     <tr className="key-bind table-active">
@@ -21,7 +24,7 @@ export const KeyMap = memo((props: Props) => {
       <td className="path">{keyMap.path && <code>{getFolderFromPath(keyMap.path)}</code>}</td>
       <td>
         <div
-          className="icon remove-key-map"
+          className="icon delete-key-bind"
           title="Remove Bind"
           onClick={() => onRemoveKeyBind(keyMap)}>
           <Trash />
