@@ -3,9 +3,13 @@ A minimalist media sorter based on [Leafview](https://github.com/sprout2000/leaf
 
 ## Development
 
+Install dependencies:
+
 ```sh
 npm i
 ```
+
+Start server:
 
 ```sh
 npm run dev
