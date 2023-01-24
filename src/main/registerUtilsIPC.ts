@@ -4,6 +4,8 @@ import { checkmime, isVideo } from './shared/utils';
 import fs from 'fs-extra';
 import path from 'node:path';
 import { store } from './main';
+import { addLogItem, disableUndo } from './shared/logger';
+import { OperationType } from './@types/Enums';
 
 const isDarwin = process.platform === 'darwin';
 const dotfiles = isDarwin ? '.' : '._';
@@ -45,8 +47,33 @@ export const registerUtilsIPC = () => {
 
   ipcMain.handle('move-file', async (_e, filePath: string, destinationPath: string) => {
     const fileName = path.basename(filePath);
-    await fs.move(filePath, `${destinationPath}/${fileName}`);
+    const fullPath =
+      fs.existsSync(destinationPath) && fs.lstatSync(destinationPath).isDirectory()
+        ? `${destinationPath}/${fileName}`
+        : destinationPath;
 
-    console.info(`moving ${filePath} to ${destinationPath}`);
+    fs.move(filePath, fullPath).then(async () => {
+      await addLogItem({
+        operation: OperationType.MOVED,
+        prevState: filePath,
+        afterState: fullPath,
+        canBeUndone: true,
+      });
+    });
+  });
+
+  ipcMain.handle('get-log-items', (): LogItem[] => {
+    return store.get('log', [] as LogItem[]);
+  });
+
+  ipcMain.handle('add-log-item', (_e: Event, logItem: LogItem): void => {
+    const logItems: LogItem[] = store.get('log');
+
+    logItems.push(logItem);
+    store.set('log', logItems);
+  });
+
+  ipcMain.handle('disable-undo-log', (_e: Event, logItem: LogItem): void => {
+    disableUndo(logItem);
   });
 };

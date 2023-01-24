@@ -3,7 +3,7 @@ import { BindConflictException } from './exceptions/BindConflictException';
 import { store } from './main';
 
 export const registerKeyBindsIPC = () => {
-  ipcMain.handle('get-all-key-binds', (): KeyBindType[] => {
+  ipcMain.handle('get-key-binds', (): KeyBindType[] => {
     return store.get('keyBinds', [] as KeyBindType[]);
   });
 

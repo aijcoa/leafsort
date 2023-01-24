@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { GalleryContextInterface, KeyBindContextInterface } from '../../main/@types/Context';
 import { GalleryContext } from '../providers/GalleryContext';
 import { KeyBindContext } from '../providers/KeyBindContext';
@@ -13,20 +13,21 @@ const { myAPI } = window;
 export const App = () => {
   const isDarwin = navigator.userAgentData.platform === 'macOS';
 
-  const [currentImage, setCurrentImage] = useState<number | null>(null);
-
   const keyBindContext = useContext<KeyBindContextInterface>(KeyBindContext);
-  const { getAllKeyBinds, registerKeyBinds } = keyBindContext;
+  const { keyBinds, getKeyBinds, registerKeyBinds } = keyBindContext;
 
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
-  const { onNext, onPrevious, folderPath, setFolderPath, onMenuOpen, onRemove, imgURL, imgList } =
-    galleryContext;
-
-  useEffect(() => {
-    if (imgList.length) {
-      setCurrentImage(imgList.indexOf(imgURL) + 1);
-    }
-  }, [currentImage, imgList, imgURL]);
+  const {
+    onNext,
+    onPrevious,
+    folderPath,
+    setFolderPath,
+    getImagesFromPath,
+    onRemove,
+    imgURL,
+    imgList,
+    sortedImages,
+  } = galleryContext;
 
   const updateTitle = async (filefolderPath: string) => {
     await myAPI.updateTitle(filefolderPath);
@@ -58,11 +59,11 @@ export const App = () => {
   }, [onRemove]);
 
   useEffect(() => {
-    const unlistenFn = myAPI.menuOpen(onMenuOpen);
+    const unlistenFn = myAPI.menuOpen(getImagesFromPath);
     return () => {
       unlistenFn();
     };
-  }, [onMenuOpen]);
+  }, [getImagesFromPath]);
 
   useEffect(() => {
     const title = !folderPath ? 'Leaf | Sort' : `Sorting - ${folderPath}`;
@@ -70,18 +71,14 @@ export const App = () => {
   }, [folderPath]);
 
   useEffect(() => {
-    if (imgURL) {
-      myAPI.setCurrentFile(imgURL);
-    }
-  }, [imgURL]);
+    getKeyBinds();
+  }, [getKeyBinds, imgURL, registerKeyBinds]);
 
   useEffect(() => {
-    if (!imgURL) return;
+    if (!imgURL || !keyBinds) return;
 
-    getAllKeyBinds().then((binds) => {
-      registerKeyBinds(binds);
-    });
-  }, [getAllKeyBinds, imgURL, registerKeyBinds]);
+    registerKeyBinds(keyBinds);
+  }, [imgURL, keyBinds, registerKeyBinds]);
 
   return (
     <div className="row gx-3 h-100 justify-content-center">
@@ -97,7 +94,7 @@ export const App = () => {
         </div>
       </div>
 
-      <Sidebar numOfImgs={imgList.length} imagesSorted={currentImage} />
+      <Sidebar imagesSorted={sortedImages} />
     </div>
   );
 };
