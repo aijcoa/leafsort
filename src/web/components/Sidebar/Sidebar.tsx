@@ -1,33 +1,36 @@
-import { memo } from 'react';
+import { memo, useContext, useEffect } from 'react';
+import { GalleryContextInterface } from '../../../main/@types/Context';
+import { GalleryContext } from '../../providers/GalleryContext';
 import { Card } from '../Card/Card';
-import { KeyMapList } from '../KeyMapList/KeyMapList';
+import KeyMapList from './KeyMapList/KeyMapList';
+import { Log } from './Log/Log';
 
 interface Props {
   imagesSorted?: number | null;
-  numOfImgs?: number | null;
 }
 
 export const Sidebar = memo((props: Props) => {
-  const { imagesSorted, numOfImgs } = props;
+  const { imagesSorted } = props;
+
+  const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
+  const { logItems, getLogItems, sortedImages } = galleryContext;
+
+  useEffect(() => {
+    getLogItems();
+  }, [getLogItems, sortedImages]);
 
   return (
     <div className="col-3 h-100">
       <div className="row h-10">
         <Card classes="col-10 h-100" title="Status">
-          {imagesSorted ? (
-            <p>
-              Sorted {imagesSorted} / {numOfImgs}
-            </p>
-          ) : (
-            <p>Nothing to sort</p>
-          )}
+          {imagesSorted ? <p>Sorted {imagesSorted} files</p> : <p>...</p>}
         </Card>
       </div>
-      <div className="row h-60">
+      <div className="row h-50">
         <KeyMapList />
       </div>
-      <div className="row h-30">
-        <Card classes="col-10 h-100" title="Log"></Card>
+      <div className="row h-40">
+        <Log logItems={logItems} />
       </div>
     </div>
   );

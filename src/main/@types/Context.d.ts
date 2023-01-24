@@ -25,7 +25,7 @@ export interface IElectronAPI {
 
   dirname: (filePath: string) => Promise<string>;
 
-  readdir: (dirpath: string) => Promise<void | string[]>;
+  readdir: (dirPath: string) => Promise<void | string[]>;
 
   moveToTrash: (filePath: string) => Promise<void>;
 
@@ -45,18 +45,25 @@ export interface IElectronAPI {
     listener: (_e: Event, filePath: string) => Promise<void>,
   ) => () => Electron.IpcRenderer;
 
-  getAllKeyBinds: () => Promise<KeyBindType[]>;
+  getKeyBinds: () => Promise<KeyBindType[]>;
 
   storeKeyBind: (keyBind: KeyBindType) => Promise<void>;
 
   deleteKeyBind: (keyBind: KeyBindType) => Promise<void>;
 
-  setCurrentFile: (currnetImg: string) => Promise<void>;
+  getLogItems: () => Promise<LogItem[]>;
+
+  disableUndo: (logItem: LogItem) => Promise<void>;
 }
 
 export interface GalleryContextInterface {
   folderPath: string | '';
   setFolderPath(folderPath: string): void;
+  logItems: LogItem[];
+  setLogItems(logItems: LogItem[]): void;
+  getLogItems: () => Promise<LogItem[]>;
+  sortedImages: number;
+  setSortedImages(sortedImages: number): void;
   imgList: string[];
   setImgList(imgList: string[]): void;
   imgURL: string;
@@ -64,15 +71,15 @@ export interface GalleryContextInterface {
   onNext(): Promise<void>;
   onPrevious(): Promise<void>;
   onRemove(): Promise<void>;
-  onMove(destinationPath: string): Promise<void>;
+  onSort: (destinationPath: string) => Promise<void>;
   onClickOpen(): Promise<void>;
-  onMenuOpen(_e: Event, filefolderPath: string): Promise<void>;
+  getImagesFromPath(_e: Event | null, filefolderPath: string): Promise<void>;
 }
 
 export interface KeyBindContextInterface {
   keyBinds: KeyBindType[];
   setKeyBinds(keyBinds: KeyBindType[]): void;
-  getAllKeyBinds: () => Promise<KeyBindType[]>;
+  getKeyBinds: () => Promise<KeyBindType[]>;
   registerKeyBinds: (keyBind: KeyBindType[]) => Promise<void>;
   unregisterKeyBind: (keyBind: KeyBindType) => Promise<void>;
 }

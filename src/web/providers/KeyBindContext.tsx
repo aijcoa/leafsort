@@ -9,7 +9,7 @@ const { myAPI } = window;
 export const KeyBindContext = createContext<KeyBindContextInterface>({
   keyBinds: [] as KeyBindType[],
   setKeyBinds: (keyBinds: KeyBindType[]) => [],
-  getAllKeyBinds: () => Promise.resolve([]),
+  getKeyBinds: () => Promise.resolve([]),
   registerKeyBinds: (keyBind: KeyBindType[]) => Promise.resolve(),
   unregisterKeyBind: (keyBind: KeyBindType) => Promise.resolve(),
 });
@@ -18,12 +18,12 @@ export const KeyBindContextProvider = (props: {
   children: React.ReactNode;
 }): React.ReactElement => {
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
-  const { onMove } = galleryContext;
+  const { onSort } = galleryContext;
 
   const [keyBinds, setKeyBinds] = useState<KeyBindType[]>([]);
 
-  const getAllKeyBinds = useCallback(async (): Promise<KeyBindType[]> => {
-    const binds = await myAPI.getAllKeyBinds();
+  const getKeyBinds = useCallback(async (): Promise<KeyBindType[]> => {
+    const binds = await myAPI.getKeyBinds();
     setKeyBinds(binds);
     return binds;
   }, []);
@@ -33,14 +33,14 @@ export const KeyBindContextProvider = (props: {
       Object.entries(binds).forEach(([_idx, bind]) => {
         if (bind.accelerator) {
           Mousetrap.bind(bind.accelerator.toLowerCase(), async () => {
-            if (bind.path) onMove(bind.path);
+            if (bind.path) await onSort(bind.path);
           });
 
           return false;
         }
       });
     },
-    [onMove],
+    [onSort],
   );
 
   const unregisterKeyBind = useCallback(async (keyBind: KeyBindType) => {
@@ -53,7 +53,7 @@ export const KeyBindContextProvider = (props: {
       value={{
         keyBinds,
         setKeyBinds,
-        getAllKeyBinds,
+        getKeyBinds,
         registerKeyBinds,
         unregisterKeyBind,
       }}>
