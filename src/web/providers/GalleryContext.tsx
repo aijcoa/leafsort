@@ -7,6 +7,11 @@ const { myAPI } = window;
 export const GalleryContext = createContext<GalleryContextInterface>({
   folderPath: '',
   setFolderPath: (folderPath: string) => '',
+  logItems: [],
+  setLogItems: (logItems: LogItem[]) => [],
+  getLogItems: () => Promise.resolve([]),
+  sortedImages: 0,
+  setSortedImages: (sortedImages: number) => 0,
   imgList: [],
   setImgList: (imgList: string[]) => [],
   imgURL: '',
@@ -14,9 +19,9 @@ export const GalleryContext = createContext<GalleryContextInterface>({
   onNext: () => Promise.resolve(),
   onPrevious: () => Promise.resolve(),
   onRemove: () => Promise.resolve(),
-  onMove: (destinationPath: string) => Promise.resolve(),
+  onSort: (destinationPath: string) => Promise.resolve(),
   onClickOpen: () => Promise.resolve(),
-  onMenuOpen: (_e: Event, filefolderPath: string) => Promise.resolve(),
+  getImagesFromPath: (_e: Event, filefolderPath: string) => Promise.resolve(),
 });
 
 export const GalleryContextProvider = (props: {
@@ -25,6 +30,15 @@ export const GalleryContextProvider = (props: {
   const [folderPath, setFolderPath] = useState('');
   const [imgURL, setImgURL] = useState<string>('');
   const [imgList, setImgList] = useState<string[]>([]);
+  const [logItems, setLogItems] = useState<LogItem[]>([]);
+  const [sortedImages, setSortedImages] = useState<number>(0);
+
+  const getLogItems = async (): Promise<LogItem[]> => {
+    const logItems: LogItem[] = await myAPI.getLogItems();
+    setLogItems(logItems.reverse());
+
+    return logItems;
+  };
 
   const removeImageFromState = useCallback(
     async (index: number) => {
@@ -82,7 +96,7 @@ export const GalleryContextProvider = (props: {
     await removeImageFromState(index);
   }, [imgList, imgURL, removeImageFromState]);
 
-  const onMove = async (destinationPath: string) => {
+  const onSort = async (destinationPath: string) => {
     if (!imgURL) {
       alert('Select a folder to sort');
       return;
@@ -91,11 +105,14 @@ export const GalleryContextProvider = (props: {
     const index = imgList.indexOf(imgURL);
 
     await myAPI.moveFile(imgURL, destinationPath);
+    await getLogItems();
     await removeImageFromState(index);
+
+    setSortedImages(sortedImages + 1);
     onNext();
   };
 
-  const onMenuOpen = useCallback(async (_e: Event | null, filefolderPath: string) => {
+  const getImagesFromPath = useCallback(async (_e: Event | null, filefolderPath: string) => {
     if (!filefolderPath) return;
 
     setFolderPath(filefolderPath);
@@ -115,10 +132,10 @@ export const GalleryContextProvider = (props: {
     const filefolderPath = await myAPI.openDialog();
     if (!filefolderPath) return;
 
-    onMenuOpen(null, filefolderPath);
+    getImagesFromPath(null, filefolderPath);
 
     setFolderPath(filefolderPath);
-  }, [onMenuOpen]);
+  }, [getImagesFromPath]);
 
   return (
     <GalleryContext.Provider
@@ -129,12 +146,17 @@ export const GalleryContextProvider = (props: {
         setImgList,
         folderPath,
         setFolderPath,
+        logItems,
+        setLogItems,
+        getLogItems,
+        sortedImages,
+        setSortedImages,
         onNext,
         onPrevious,
         onClickOpen,
-        onMenuOpen,
+        getImagesFromPath,
         onRemove,
-        onMove,
+        onSort,
       }}>
       {props.children}
     </GalleryContext.Provider>

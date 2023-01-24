@@ -1,0 +1,28 @@
+@import '/assets/styles/variables';
+
+table.log {
+  cursor: pointer;
+
+  .log-action {
+    text-align: center;
+    border-left: 1px solid $gray-700;
+  }
+
+  .log-item,
+  .log-action {
+    font-size: x-small;
+    padding: 0.5em;
+  }
+}
+
+.fullscreen {
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: -0.5em;
+
+  td.log-action,
+  td.log-item {
+    font-size: small;
+  }
+}
