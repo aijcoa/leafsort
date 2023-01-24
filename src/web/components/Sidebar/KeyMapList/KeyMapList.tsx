@@ -1,9 +1,9 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { KeyBindContextInterface } from '../../../main/@types/Context';
-import { KeyBindContext } from '../../providers/KeyBindContext';
+import { KeyBindContextInterface } from '../../../../main/@types/Context';
+import { KeyBindContext } from '../../../providers/KeyBindContext';
+import { Card } from '../../Card/Card';
+import { Plus } from '../../Icons/Plus';
 import { AddKeyBindModal } from '../AddKeyBindModal/AddKeyBindModal';
-import { Card } from '../Card/Card';
-import { Plus } from '../Icons/Plus';
 import { KeyMap } from '../KeyMap/KeyMap';
 import './KeyMapList.scss';
 
@@ -11,15 +11,15 @@ const { myAPI } = window;
 
 export const KeyMapList = () => {
   const keyBindContext = useContext<KeyBindContextInterface>(KeyBindContext);
-  const { keyBinds, getAllKeyBinds } = keyBindContext;
+  const { keyBinds, getKeyBinds } = keyBindContext;
 
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
   const removeKeyBind = useCallback(
     (bind: KeyBindType) => {
-      myAPI.deleteKeyBind(bind).then(() => getAllKeyBinds());
+      myAPI.deleteKeyBind(bind).then(() => getKeyBinds());
     },
-    [getAllKeyBinds],
+    [getKeyBinds],
   );
 
   return (
@@ -53,7 +53,7 @@ export const KeyMapList = () => {
 
       {isModalOpen && (
         <AddKeyBindModal
-          onSave={getAllKeyBinds}
+          onSave={getKeyBinds}
           isOpen={isModalOpen}
           onClose={() => setModalOpen(false)}
         />

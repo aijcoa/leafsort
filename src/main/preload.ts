@@ -13,7 +13,7 @@ contextBridge.exposeInMainWorld('myAPI', {
 
   dirname: (filePath: string): Promise<string> => ipcRenderer.invoke('dirname', filePath),
 
-  readdir: (dirpath: string): Promise<void | string[]> => ipcRenderer.invoke('readdir', dirpath),
+  readdir: (dirPath: string): Promise<void | string[]> => ipcRenderer.invoke('readdir', dirPath),
 
   moveToTrash: (filePath: string): Promise<void> => ipcRenderer.invoke('move-to-trash', filePath),
 
@@ -23,15 +23,6 @@ contextBridge.exposeInMainWorld('myAPI', {
   openDialog: (): Promise<string | void | undefined> => ipcRenderer.invoke('open-dialog'),
 
   updateTitle: (filePath: string): Promise<void> => ipcRenderer.invoke('update-title', filePath),
-
-  storeKeyBind: async (keyBind: KeyBindType): Promise<void> =>
-    ipcRenderer.invoke('store-key-bind', keyBind),
-
-  deleteKeyBind: async (keyBind: KeyBindType): Promise<void> =>
-    ipcRenderer.invoke('delete-key-bind', keyBind),
-
-  setCurrentFile: async (currentFile: string): Promise<void> =>
-    ipcRenderer.invoke('set-current-file', currentFile),
 
   menuNext: (listener: () => Promise<void>) => {
     ipcRenderer.on('menu-next', listener);
@@ -53,5 +44,16 @@ contextBridge.exposeInMainWorld('myAPI', {
     return () => ipcRenderer.removeAllListeners('menu-open');
   },
 
-  getAllKeyBinds: (): Promise<KeyBindType[]> => ipcRenderer.invoke('get-all-key-binds'),
+  storeKeyBind: async (keyBind: KeyBindType): Promise<void> =>
+    ipcRenderer.invoke('store-key-bind', keyBind),
+
+  deleteKeyBind: async (keyBind: KeyBindType): Promise<void> =>
+    ipcRenderer.invoke('delete-key-bind', keyBind),
+
+  getKeyBinds: (): Promise<KeyBindType[]> => ipcRenderer.invoke('get-key-binds'),
+
+  getLogItems: (): Promise<LogItem[]> => ipcRenderer.invoke('get-log-items'),
+
+  disableUndo: (logItem: LogItem): Promise<LogItem[]> =>
+    ipcRenderer.invoke('disable-undo-log', logItem),
 });

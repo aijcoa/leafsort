@@ -8,11 +8,13 @@ import path from 'node:path';
 import { setLocales } from './setLocales';
 import { createWindow } from './createWindow';
 import { getResourceDirectory } from './shared/utils';
+import { clearLog } from './shared/logger';
 
 // eslint-disable-next-line no-console
 console.log = log.log;
 log.info('App starting...');
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 let openfile: string | null = null;
 
 const isDarwin = process.platform === 'darwin';
@@ -34,13 +36,15 @@ export const store = new Store<StoreType>({
     currentFile: undefined,
     previousFile: undefined,
     nextFile: undefined,
-    keyBinds: [],
+    keyBinds: [] as KeyBindType[],
+    log: [] as LogItem[],
   },
 });
 
 app.once('will-finish-launching', () => {
   app.once('open-file', (e, filePath) => {
     e.preventDefault();
+
     openfile = filePath;
   });
 });
@@ -50,6 +54,7 @@ app.whenReady().then(() => {
   setLocales(locale);
   store.set('language', locale);
 
+  clearLog();
   createWindow();
 });
 

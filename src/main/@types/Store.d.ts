@@ -11,6 +11,7 @@ declare type StoreType = {
   previousFile: FileType | undefined;
   nextFile: FileType | undefined;
   keyBinds: KeyBindType[];
+  log: LogItem[];
 };
 
 declare type FileType = {
@@ -21,4 +22,11 @@ declare type FileType = {
 declare type KeyBindType = {
   accelerator?: string;
   path?: string;
+};
+
+declare type LogItem = {
+  operation: string;
+  prevState: string;
+  afterState?: string;
+  canBeUndone?: boolean;
 };

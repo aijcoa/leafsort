@@ -135,7 +135,7 @@ thead th {
   }
 }
 
-.breadcrumb-item+.breadcrumb-item::before {
+.breadcrumb-item + .breadcrumb-item::before {
   padding-right: 1rem;
 }
 
@@ -147,7 +147,6 @@ thead th {
 }
 
 .badge {
-
   &.bg-secondary,
   &.bg-light {
     color: $gray-900;
@@ -197,9 +196,9 @@ thead th {
   max-height: 30%;
 }
 
-.h-60 {
-  height: 60%;
-  max-height: 60%;
+.h-40 {
+  height: 40%;
+  max-height: 40%;
 }
 
 .h-90 {

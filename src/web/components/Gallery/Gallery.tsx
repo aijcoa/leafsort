@@ -15,6 +15,7 @@ interface Props {
 
 export const Gallery = memo((props: Props) => {
   const { isDarwin, myAPI, setFolderPath, imgURL } = props;
+
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
   const { onClickOpen, setImgURL, setImgList } = galleryContext;
 

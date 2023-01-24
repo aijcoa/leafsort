@@ -4,8 +4,9 @@ import { Accelerator } from '../Accelerator/Accelerator';
 
 import 'mousetrap/plugins/record/mousetrap-record';
 import './AddKeyBindModal.scss';
-import { KeyBindContextInterface } from '../../../main/@types/Context';
-import { KeyBindContext } from '../../providers/KeyBindContext';
+import { GalleryContextInterface, KeyBindContextInterface } from '../../../../main/@types/Context';
+import { KeyBindContext } from '../../../providers/KeyBindContext';
+import { GalleryContext } from '../../../providers/GalleryContext';
 
 const { myAPI } = window;
 
@@ -21,6 +22,9 @@ export const AddKeyBindModal = memo((props: Props) => {
 
   const [keyBind, setKeyBind] = useState<KeyBindType>();
   const recorderRef = useRef<HTMLTableCellElement>(null);
+
+  const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
+  const { folderPath } = galleryContext;
 
   const keyBindContext = useContext<KeyBindContextInterface>(KeyBindContext);
   const { keyBinds, setKeyBinds, registerKeyBinds } = keyBindContext;
@@ -47,11 +51,16 @@ export const AddKeyBindModal = memo((props: Props) => {
   };
 
   const onClickOpen = useCallback(async () => {
-    const filefolderPath = await myAPI.openDialog();
-    if (!filefolderPath) return;
+    const destinationPath = await myAPI.openDialog();
+    if (!destinationPath) return;
 
-    setKeyBind({ ...keyBind, path: filefolderPath });
-  }, [keyBind]);
+    if (destinationPath === folderPath) {
+      alert('Source and destination path must not be the same.');
+      return;
+    }
+
+    setKeyBind({ ...keyBind, path: destinationPath });
+  }, [folderPath, keyBind]);
 
   useEffect(() => {
     recorderRef.current?.focus();
@@ -81,8 +90,8 @@ export const AddKeyBindModal = memo((props: Props) => {
                   {keyBind?.accelerator && <Accelerator accelerator={keyBind.accelerator} />}
                 </div>
               </td>
-              <td className="select-path" onClick={onClickOpen}>
-                {keyBind?.path || 'PATH'}
+              <td className="select-path text-lg-center" onClick={onClickOpen}>
+                {keyBind?.path || 'SELECT PATH'}
               </td>
             </tr>
           </tbody>
