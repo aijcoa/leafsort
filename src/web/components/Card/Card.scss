@@ -1,6 +1,12 @@
+@import '/assets/styles/variables';
+
 .card {
   fieldset {
     padding: 0em 1em 0em 1em;
+  }
+
+  .card-title {
+    color: $gray-300;
   }
 
   .card-body p {
