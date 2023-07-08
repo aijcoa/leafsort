@@ -2,11 +2,10 @@ import { useContext, useEffect } from 'react';
 import { GalleryContextInterface, KeyBindContextInterface } from '../../main/@types/Context';
 import { GalleryContext } from '../providers/GalleryContext';
 import { KeyBindContext } from '../providers/KeyBindContext';
-
-import './App.scss';
 import { Gallery } from './Gallery/Gallery';
 import { Header } from './Header/Header';
 import { Sidebar } from './Sidebar/Sidebar';
+import './App.scss';
 
 const { myAPI } = window;
 
@@ -17,17 +16,8 @@ export const App = () => {
   const { keyBinds, getKeyBinds, registerKeyBinds } = keyBindContext;
 
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
-  const {
-    onNext,
-    onPrevious,
-    folderPath,
-    setFolderPath,
-    getImagesFromPath,
-    onRemove,
-    imgURL,
-    imgList,
-    sortedImages,
-  } = galleryContext;
+  const { onNext, onPrevious, folderPath, setFolderPath, getImagesFromPath, onRemove, imgURL } =
+    galleryContext;
 
   const updateTitle = async (filefolderPath: string) => {
     await myAPI.updateTitle(filefolderPath);
@@ -94,7 +84,7 @@ export const App = () => {
         </div>
       </div>
 
-      <Sidebar imagesSorted={sortedImages} />
+      <Sidebar />
     </div>
   );
 };
