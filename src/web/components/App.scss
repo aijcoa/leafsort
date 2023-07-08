@@ -1,18 +1,18 @@
+@import '/node_modules/bootstrap/scss/bootstrap';
 @import '/assets/styles/variables';
-@import '../../../node_modules/bootstrap/scss/bootstrap.scss';
 @import '/assets/styles/bootswatch';
 @import '/assets/styles/fonts';
 
 :root {
   @media (prefers-color-scheme: dark) {
     body {
-      background: #1e1e1e;
+      background: $gray-900;
     }
   }
 
   @media (prefers-color-scheme: light) {
     body {
-      background: #f6f6f6;
+      background: $gray-900;
     }
   }
 }
