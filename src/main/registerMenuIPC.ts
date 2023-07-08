@@ -9,7 +9,7 @@ export const registerMenuIPC = (mainWindow: BrowserWindow) => {
   ipcMain.handle('open-dialog', async () => {
     return dialog
       .showOpenDialog(mainWindow, {
-        properties: ['openDirectory'],
+        properties: ['openDirectory', 'createDirectory'],
         title: `${i18next.t('Select an image')}`,
         filters: [
           {

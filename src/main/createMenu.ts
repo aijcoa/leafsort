@@ -178,7 +178,7 @@ export const createMenu = (win: BrowserWindow, store: Store<StoreType>) => {
           click: () => {
             dialog
               .showOpenDialog(win, {
-                properties: ['openDirectory'],
+                properties: ['openDirectory', 'createDirectory'],
                 title: `${i18next.t('Select a directory')}`,
               })
               .then((result) => {
