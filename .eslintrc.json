@@ -1,4 +1,9 @@
 {
+  "settings": {
+    "react": {
+      "version": "detect"
+    }
+  },
   "env": {
     "browser": true,
     "node": true,
@@ -32,12 +37,14 @@
     "@typescript-eslint",
     "promise",
     "react",
-    "react-hooks"
+    "react-hooks",
+    "unused-imports"
   ],
   "ignorePatterns": [
     "**/*.json"
   ],
   "rules": {
+    "unused-imports/no-unused-imports": "error",
     "react/prop-types": "off",
     "react/react-in-jsx-scope": "off",
     "@typescript-eslint/no-var-requires": "off",
