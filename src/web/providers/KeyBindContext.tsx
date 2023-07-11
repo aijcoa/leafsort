@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react';
+import React, { createContext, useCallback, useContext, useState } from 'react';
 import { GalleryContextInterface, KeyBindContextInterface } from '../../main/@types/Context';
 import Mousetrap from 'mousetrap';
 import { GalleryContext } from './GalleryContext';
