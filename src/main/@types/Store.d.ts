@@ -25,7 +25,7 @@ declare type KeyBindType = {
 };
 
 declare type LogItem = {
-  operation: OperationType;
+  operation: string;
   prevState: string;
   afterState?: string;
   canBeUndone?: boolean;

@@ -289,57 +289,6 @@ export const createMenu = (win: BrowserWindow, store: Store<StoreType>) => {
   return Menu.buildFromTemplate(template);
 };
 
-// const createFileMenu = (win: BrowserWindow, store: Store): MenuItemConstructorOptions => {
-//   return {
-//     label: `${i18next.t('File')}`,
-//     submenu: [
-//       {
-//         label: `${i18next.t('Open...')}`,
-//         accelerator: 'CmdOrCtrl+O',
-//         click: () => {
-//           dialog
-//             .showOpenDialog(win, {
-//               properties: ['openDirectory', 'createDirectory'],
-//               title: `${i18next.t('Select a directory')}`,
-//             })
-//             .then((result) => {
-//               if (result.canceled) return;
-
-//               if (path.basename(result.filePaths[0]).startsWith(dotfiles)) {
-//                 return;
-//               }
-
-//               win.webContents.send('menu-open', result.filePaths[0]);
-//             })
-//             .catch((err) => {
-//               console.info('inside catch');
-//               console.info(err);
-//             });
-//         },
-//       },
-//       { type: 'separator' },
-//       {
-//         label: `${i18next.t('Move to Trash')}`,
-//         accelerator: 'Delete',
-//         click: () => win.webContents.send('menu-remove'),
-//       },
-//       {
-//         label: `${i18next.t('Rename')}`,
-//         accelerator: isDarwin ? 'Cmd+R' : 'Windows+R',
-//       },
-//       { type: 'separator' },
-//       {
-//         label: `${i18next.t('Close')}`,
-//         accelerator: isDarwin ? 'Cmd+W' : 'Alt+F4',
-//         role: 'close',
-//       },
-//     ],
-//   };
-// };
-// const createViewMenu = (win: BrowserWindow, store: Store): MenuItemConstructorOptions[] => {};
-// const createWindowMenu = (win: BrowserWindow, store: Store): MenuItemConstructorOptions[] => {};
-// const createHelpMenu = (win: BrowserWindow, store: Store): MenuItemConstructorOptions[] => {};
-
 export const rebuildMenu = (): void => {
   const window = BrowserWindow.getFocusedWindow();
 
