@@ -1,17 +1,31 @@
 @import '/assets/styles/variables';
 
-table.log {
+.log-body {
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.table-hover.log {
+  height: fit-content;
+  table-layout: fixed;
 
   .log-action {
+    cursor: pointer;
     text-align: center;
     border-left: 1px solid $gray-700;
   }
 
   .log-item,
   .log-action {
+    background-color: $gray-800;
     font-size: x-small;
     padding: 0.5em;
+    color: $white;
   }
 }
 
@@ -21,8 +35,12 @@ table.log {
   left: 0;
   top: -0.5em;
 
-  td.log-action,
-  td.log-item {
+  .table-hover.log {
+    table-layout: auto;
+  }
+
+  .log-item,
+  .log-action {
     font-size: small;
   }
 }
