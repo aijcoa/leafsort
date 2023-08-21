@@ -7,7 +7,7 @@ declare type StoreType = {
   language?: string;
   darkMode: boolean;
   showMenu: boolean;
-  currentFile: FileType | undefined;
+  hasFile: boolean;
   previousFile: FileType | undefined;
   nextFile: FileType | undefined;
   keyBinds: KeyBindType[];
@@ -25,7 +25,7 @@ declare type KeyBindType = {
 };
 
 declare type LogItem = {
-  operation: string;
+  operation: OperationType;
   prevState: string;
   afterState?: string;
   canBeUndone?: boolean;

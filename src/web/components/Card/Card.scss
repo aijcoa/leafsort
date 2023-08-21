@@ -1,15 +1,14 @@
 @import '/assets/styles/variables';
 
-.card {
+div.card {
+  border: none;
+
   fieldset {
-    padding: 0em 1em 0em 1em;
+    flex-direction: column;
   }
 
   .card-title {
+    width: fit-content;
     color: $gray-300;
-  }
-
-  .card-body p {
-    text-align: center;
   }
 }

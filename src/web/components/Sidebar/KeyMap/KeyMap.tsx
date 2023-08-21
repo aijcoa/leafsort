@@ -1,6 +1,5 @@
 import { memo } from 'react';
 import { Trash } from '../../Icons/Trash';
-import './KeyMap.scss';
 import { Accelerator } from '../Accelerator/Accelerator';
 
 interface Props {
