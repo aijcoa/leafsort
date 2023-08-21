@@ -1,6 +1,6 @@
 import path from 'node:path';
 import i18next from 'i18next';
-import { BrowserWindow, ipcMain, dialog, shell } from 'electron';
+import { BrowserWindow, ipcMain, dialog } from 'electron';
 
 const isDarwin = process.platform === 'darwin';
 const dotfiles = isDarwin ? '.' : '._';
@@ -26,11 +26,7 @@ export const registerMenuIPC = (mainWindow: BrowserWindow) => {
       .catch((err) => console.info(err));
   });
 
-  ipcMain.handle('move-to-trash', async (_e: Event, filePath: string) => {
-    await shell.trashItem(filePath).then(() => shell.beep());
-  });
-
-  ipcMain.handle('update-title', (_e: Event, filePath: string) => {
-    mainWindow.setTitle(path.basename(filePath));
+  ipcMain.handle('update-title', (_e: Event, title: string) => {
+    mainWindow.setTitle(title);
   });
 };

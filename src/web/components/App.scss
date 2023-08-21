@@ -5,6 +5,8 @@
 
 :root {
   @media (prefers-color-scheme: dark) {
+    --bs-body-color: #fff;
+
     body {
       background: $gray-900;
     }
@@ -12,7 +14,7 @@
 
   @media (prefers-color-scheme: light) {
     body {
-      background: $gray-900;
+      background: $gray-100;
     }
   }
 }
@@ -29,24 +31,29 @@ body,
   height: 100%;
 }
 
-.image-container {
-  user-select: none;
-}
-
-p {
-  color: rgb(237, 134, 134);
+p,
+span {
+  color: $red;
   font-size: small;
   margin-top: 1em;
 }
 
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
 .icon {
-  fill: rgb(237, 134, 134);
+  fill: $red;
 
-  &:hover {
-    cursor: pointer;
-  }
-
+  &:hover,
+  &:focus,
   &:active {
-    fill: rgb(255, 255, 255);
+    fill: $white;
+    cursor: pointer;
   }
 }

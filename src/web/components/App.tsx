@@ -6,6 +6,7 @@ import { Gallery } from './Gallery/Gallery';
 import { Header } from './Header/Header';
 import { Sidebar } from './Sidebar/Sidebar';
 import './App.scss';
+import { RenameModal } from './RenameModal/RenameModal';
 
 const { myAPI } = window;
 
@@ -16,16 +17,18 @@ export const App = () => {
   const { keyBinds, getKeyBinds, registerKeyBinds } = keyBindContext;
 
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
-  const { onNext, onPrevious, folderPath, setFolderPath, getImagesFromPath, onRemove, imgURL } =
-    galleryContext;
-
-  const updateTitle = async (filefolderPath: string) => {
-    await myAPI.updateTitle(filefolderPath);
-  };
-
-  useEffect(() => {
-    if (folderPath) myAPI.history(folderPath);
-  }, [folderPath]);
+  const {
+    onNext,
+    onPrevious,
+    folderPath,
+    setFolderPath,
+    getImagesFromPath,
+    onTrash,
+    onRenameMenu,
+    imgURL,
+    showRenameModal,
+    setShowRenameModal,
+  } = galleryContext;
 
   useEffect(() => {
     const unlistenFn = myAPI.menuNext(onNext);
@@ -42,11 +45,18 @@ export const App = () => {
   }, [onPrevious]);
 
   useEffect(() => {
-    const unlistenFn = myAPI.menuRemove(onRemove);
+    const unlistenFn = myAPI.menuRemove(onTrash);
     return () => {
       unlistenFn();
     };
-  }, [onRemove]);
+  }, [onTrash]);
+
+  useEffect(() => {
+    const unlistenFn = myAPI.menuRename(onRenameMenu);
+    return () => {
+      unlistenFn();
+    };
+  }, [onRenameMenu]);
 
   useEffect(() => {
     const unlistenFn = myAPI.menuOpen(getImagesFromPath);
@@ -57,7 +67,7 @@ export const App = () => {
 
   useEffect(() => {
     const title = !folderPath ? 'Leaf | Sort' : `Sorting - ${folderPath}`;
-    updateTitle(title);
+    myAPI.updateTitle(title);
   }, [folderPath]);
 
   useEffect(() => {
@@ -83,8 +93,15 @@ export const App = () => {
           />
         </div>
       </div>
-
       <Sidebar />
+
+      {showRenameModal && (
+        <RenameModal
+          myAPI={myAPI}
+          originalFilePath={imgURL}
+          onClose={() => setShowRenameModal(false)}
+        />
+      )}
     </div>
   );
 };

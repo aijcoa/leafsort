@@ -14,46 +14,29 @@ declare global {
 
 export interface IElectronAPI {
   getLocale: () => Promise<string>;
-
   contextMenu: () => Promise<void>;
-
   history: (filePath: string) => Promise<void>;
-
   mimecheck: (filePath: string) => Promise<boolean>;
-
   isVideo: (filePath: string) => Promise<boolean>;
-
   dirname: (filePath: string) => Promise<string>;
-
   readdir: (dirPath: string) => Promise<void | string[]>;
-
   moveToTrash: (filePath: string) => Promise<void>;
-
   moveFile: (filePath: string, destinationPath: string) => Promise<void>;
-
+  renameFile: (filePath: string, newFileName: string) => Promise<void>;
   openDialog: () => Promise<string | void | undefined>;
-
   updateTitle: (filePath: string) => Promise<void>;
-
+  getKeyBinds: () => Promise<KeyBindType[]>;
+  storeKeyBind: (keyBind: KeyBindType) => Promise<void>;
+  deleteKeyBind: (keyBind: KeyBindType) => Promise<void>;
+  getLogItems: () => Promise<LogItem[]>;
+  undoLog: (logItem: LogItem) => Promise<void>;
   menuNext: (listener: () => Promise<void>) => () => Electron.IpcRenderer;
-
   menuPrev: (listener: () => Promise<void>) => () => Electron.IpcRenderer;
-
   menuRemove: (listener: () => Promise<void>) => () => Electron.IpcRenderer;
-
+  menuRename: (listener: () => Promise<void>) => () => Electron.IpcRenderer;
   menuOpen: (
     listener: (_e: Event, filePath: string) => Promise<void>,
   ) => () => Electron.IpcRenderer;
-
-  getKeyBinds: () => Promise<KeyBindType[]>;
-
-  storeKeyBind: (keyBind: KeyBindType) => Promise<void>;
-
-  deleteKeyBind: (keyBind: KeyBindType) => Promise<void>;
-
-  getLogItems: () => Promise<LogItem[]>;
-
-  disableUndo: (logItem: LogItem) => Promise<void>;
 }
 
 export interface GalleryContextInterface {
@@ -68,10 +51,13 @@ export interface GalleryContextInterface {
   setImgList(imgList: string[]): void;
   imgURL: string;
   setImgURL(imgURL: string): void;
+  showRenameModal: boolean;
+  setShowRenameModal(showRenameModal: boolean): void;
   onNext(): Promise<void>;
   onPrevious(): Promise<void>;
-  onRemove(): Promise<void>;
-  onSort: (destinationPath: string) => Promise<void>;
+  onTrash(): Promise<void>;
+  onRenameMenu: () => Promise<void>;
+  onMoveFile: (destinationPath: string) => Promise<void>;
   onClickOpen(): Promise<void>;
   getImagesFromPath(_e: Event | null, filefolderPath: string): Promise<void>;
 }

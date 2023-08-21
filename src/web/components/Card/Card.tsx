@@ -17,7 +17,7 @@ export const Card = (props: Props) => {
   return (
     <div className={parentClasses}>
       <fieldset className={childClasses}>
-        {title && <legend className="card-title m-0 float-none w-auto p-1">{title}</legend>}
+        {title && <legend className="card-title m-0 float-none p-1">{title}</legend>}
 
         {children}
       </fieldset>

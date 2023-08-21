@@ -18,7 +18,7 @@ export const KeyBindContextProvider = (props: {
   children: React.ReactNode;
 }): React.ReactElement => {
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
-  const { onSort } = galleryContext;
+  const { onMoveFile } = galleryContext;
 
   const [keyBinds, setKeyBinds] = useState<KeyBindType[]>([]);
 
@@ -33,14 +33,14 @@ export const KeyBindContextProvider = (props: {
       Object.entries(binds).forEach(([_idx, bind]) => {
         if (bind.accelerator) {
           Mousetrap.bind(bind.accelerator.toLowerCase(), async () => {
-            if (bind.path) await onSort(bind.path);
+            if (bind.path) await onMoveFile(bind.path);
           });
 
           return false;
         }
       });
     },
-    [onSort],
+    [onMoveFile],
   );
 
   const unregisterKeyBind = useCallback(async (keyBind: KeyBindType) => {
