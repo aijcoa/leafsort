@@ -20,9 +20,12 @@ contextBridge.exposeInMainWorld('myAPI', {
   moveFile: (filePath: string, destinationPath: string): Promise<void> =>
     ipcRenderer.invoke('move-file', filePath, destinationPath),
 
+  renameFile: (filePath: string, newFileName: string): Promise<void> =>
+    ipcRenderer.invoke('rename-file', filePath, newFileName),
+
   openDialog: (): Promise<string | void | undefined> => ipcRenderer.invoke('open-dialog'),
 
-  updateTitle: (filePath: string): Promise<void> => ipcRenderer.invoke('update-title', filePath),
+  updateTitle: (title: string): Promise<void> => ipcRenderer.invoke('update-title', title),
 
   menuNext: (listener: () => Promise<void>) => {
     ipcRenderer.on('menu-next', listener);
@@ -37,6 +40,11 @@ contextBridge.exposeInMainWorld('myAPI', {
   menuRemove: (listener: () => Promise<void>) => {
     ipcRenderer.on('menu-remove', listener);
     return () => ipcRenderer.removeAllListeners('menu-remove');
+  },
+
+  menuRename: (listener: () => Promise<void>) => {
+    ipcRenderer.on('menu-rename', listener);
+    return () => ipcRenderer.removeAllListeners('menu-rename');
   },
 
   menuOpen: (listener: (_e: Event, filePath: string) => Promise<void>) => {
@@ -54,6 +62,6 @@ contextBridge.exposeInMainWorld('myAPI', {
 
   getLogItems: (): Promise<LogItem[]> => ipcRenderer.invoke('get-log-items'),
 
-  disableUndo: (logItem: LogItem): Promise<LogItem[]> =>
+  undoLog: (logItem: LogItem): Promise<LogItem[]> =>
     ipcRenderer.invoke('disable-undo-log', logItem),
 });

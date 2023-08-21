@@ -11,6 +11,7 @@ import {
 import path from 'node:path';
 import i18next from 'i18next';
 import Store from 'electron-store';
+import { store } from './main';
 
 const localeList: Locale[] = [
   { code: 'ar', value: 'اللغة العربية' },
@@ -33,8 +34,8 @@ const localeList: Locale[] = [
 export const createMenu = (win: BrowserWindow, store: Store<StoreType>) => {
   const isDarwin = process.platform === 'darwin';
   const dotfiles = isDarwin ? '.' : '._';
-
   const langSub: MenuItemConstructorOptions[] = [];
+  const hasFile = store.get('hasFile') !== undefined;
 
   localeList.map((locale) => {
     langSub.push({
@@ -69,29 +70,33 @@ export const createMenu = (win: BrowserWindow, store: Store<StoreType>) => {
   const viewSub: MenuItemConstructorOptions[] = [
     {
       label: `${i18next.t('Skip Image')}`,
-      accelerator: 'J',
+      accelerator: 'Ctrl+N',
+      enabled: hasFile,
       click: () => win.webContents.send('menu-next'),
     },
     {
       label: 'Skip Image (invisible)',
-      accelerator: 'Ctrl+N',
+      accelerator: 'CmdOrCtrl+N',
+      enabled: hasFile,
       click: () => win.webContents.send('menu-next'),
       visible: false,
     },
     {
       label: 'Skip Image (invisible)',
       accelerator: 'CmdOrCtrl+Right',
+      enabled: hasFile,
       click: () => win.webContents.send('menu-next'),
       visible: false,
     },
     {
       label: `${i18next.t('Prev Image')}`,
-      accelerator: 'L',
+      accelerator: 'CmdOrCtrl+P',
+      enabled: hasFile,
       click: () => win.webContents.send('menu-prev'),
     },
     {
       label: 'Prev Image (invisible)',
-      accelerator: 'Ctrl+P',
+      accelerator: 'CmdOrCtrl+P',
       click: () => win.webContents.send('menu-prev'),
       visible: false,
     },
@@ -154,7 +159,7 @@ export const createMenu = (win: BrowserWindow, store: Store<StoreType>) => {
   const helpSub: MenuItemConstructorOptions[] = [
     {
       label: `${i18next.t('Support URL...')}`,
-      click: async () => await shell.openExternal('https://github.com/sprout2000/leafSort/#readme'),
+      click: async () => await shell.openExternal('https://github.com/aijcoa/leafSort/#readme'),
     },
   ];
 
@@ -178,7 +183,7 @@ export const createMenu = (win: BrowserWindow, store: Store<StoreType>) => {
           click: () => {
             dialog
               .showOpenDialog(win, {
-                properties: ['openDirectory'],
+                properties: ['openDirectory', 'createDirectory'],
                 title: `${i18next.t('Select a directory')}`,
               })
               .then((result) => {
@@ -201,6 +206,12 @@ export const createMenu = (win: BrowserWindow, store: Store<StoreType>) => {
           label: `${i18next.t('Move to Trash')}`,
           accelerator: 'Delete',
           click: () => win.webContents.send('menu-remove'),
+        },
+        {
+          label: `${i18next.t('Rename')}`,
+          accelerator: isDarwin ? 'Cmd+Return' : 'F2',
+          enabled: hasFile,
+          click: () => win.webContents.send('menu-rename'),
         },
         { type: 'separator' },
         {
@@ -276,4 +287,63 @@ export const createMenu = (win: BrowserWindow, store: Store<StoreType>) => {
   }
 
   return Menu.buildFromTemplate(template);
+};
+
+// const createFileMenu = (win: BrowserWindow, store: Store): MenuItemConstructorOptions => {
+//   return {
+//     label: `${i18next.t('File')}`,
+//     submenu: [
+//       {
+//         label: `${i18next.t('Open...')}`,
+//         accelerator: 'CmdOrCtrl+O',
+//         click: () => {
+//           dialog
+//             .showOpenDialog(win, {
+//               properties: ['openDirectory', 'createDirectory'],
+//               title: `${i18next.t('Select a directory')}`,
+//             })
+//             .then((result) => {
+//               if (result.canceled) return;
+
+//               if (path.basename(result.filePaths[0]).startsWith(dotfiles)) {
+//                 return;
+//               }
+
+//               win.webContents.send('menu-open', result.filePaths[0]);
+//             })
+//             .catch((err) => {
+//               console.info('inside catch');
+//               console.info(err);
+//             });
+//         },
+//       },
+//       { type: 'separator' },
+//       {
+//         label: `${i18next.t('Move to Trash')}`,
+//         accelerator: 'Delete',
+//         click: () => win.webContents.send('menu-remove'),
+//       },
+//       {
+//         label: `${i18next.t('Rename')}`,
+//         accelerator: isDarwin ? 'Cmd+R' : 'Windows+R',
+//       },
+//       { type: 'separator' },
+//       {
+//         label: `${i18next.t('Close')}`,
+//         accelerator: isDarwin ? 'Cmd+W' : 'Alt+F4',
+//         role: 'close',
+//       },
+//     ],
+//   };
+// };
+// const createViewMenu = (win: BrowserWindow, store: Store): MenuItemConstructorOptions[] => {};
+// const createWindowMenu = (win: BrowserWindow, store: Store): MenuItemConstructorOptions[] => {};
+// const createHelpMenu = (win: BrowserWindow, store: Store): MenuItemConstructorOptions[] => {};
+
+export const rebuildMenu = (): void => {
+  const window = BrowserWindow.getFocusedWindow();
+
+  if (!window) return;
+
+  Menu.setApplicationMenu(createMenu(window, store));
 };

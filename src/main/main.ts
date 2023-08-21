@@ -10,12 +10,7 @@ import { createWindow } from './createWindow';
 import { getResourceDirectory } from './shared/utils';
 import { clearLog } from './shared/logger';
 
-// eslint-disable-next-line no-console
-console.log = log.log;
 log.info('App starting...');
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-let openfile: string | null = null;
 
 const isDarwin = process.platform === 'darwin';
 const isDevelop = process.env.NODE_ENV === 'development';
@@ -33,7 +28,7 @@ export const store = new Store<StoreType>({
     height: initHeight,
     darkMode: true,
     showMenu: true,
-    currentFile: undefined,
+    hasFile: false,
     previousFile: undefined,
     nextFile: undefined,
     keyBinds: [] as KeyBindType[],
@@ -41,18 +36,11 @@ export const store = new Store<StoreType>({
   },
 });
 
-app.once('will-finish-launching', () => {
-  app.once('open-file', (e, filePath) => {
-    e.preventDefault();
-
-    openfile = filePath;
-  });
-});
-
 app.whenReady().then(() => {
   const locale = store.get('language') || app.getLocale();
   setLocales(locale);
   store.set('language', locale);
+  store.delete('hasFile');
 
   clearLog();
   createWindow();
