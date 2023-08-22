@@ -1,9 +1,9 @@
-@mixin Icon {
-}
+fieldset.header {
+  padding-top: 10px;
 
-.header {
-  .folder {
-    position: absolute;
-    top: 50%;
+  .icon {
+    &.folder {
+      vertical-align: middle;
+    }
   }
 }
