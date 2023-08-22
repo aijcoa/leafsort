@@ -62,6 +62,6 @@ contextBridge.exposeInMainWorld('myAPI', {
 
   getLogItems: (): Promise<LogItem[]> => ipcRenderer.invoke('get-log-items'),
 
-  undoLog: (logItem: LogItem): Promise<LogItem[]> =>
-    ipcRenderer.invoke('disable-undo-log', logItem),
+  undoOperation: (logItem: LogItem): Promise<LogItem[]> =>
+    ipcRenderer.invoke('undo-operation', logItem),
 });

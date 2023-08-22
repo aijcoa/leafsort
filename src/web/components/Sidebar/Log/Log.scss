@@ -12,7 +12,6 @@
 
 .table-hover.log {
   height: fit-content;
-  table-layout: fixed;
 
   .log-action {
     cursor: pointer;
@@ -26,21 +25,6 @@
     font-size: x-small;
     padding: 0.5em;
     color: $white;
-  }
-}
-
-.fullscreen {
-  height: 100%;
-  position: absolute;
-  left: 0;
-  top: -0.5em;
-
-  .table-hover.log {
-    table-layout: auto;
-  }
-
-  .log-item,
-  .log-action {
-    font-size: small;
+    border-bottom: 1px solid $gray-700;
   }
 }
