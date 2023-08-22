@@ -1,14 +1,11 @@
 import { app, ipcMain, shell } from 'electron';
-import { checkmime, isVideo } from './shared/utils';
+import { checkmime, dotfiles, getTrashDirectory, isVideo } from './shared/utils';
 import fs from 'fs-extra';
 import path from 'node:path';
 import { store } from './main';
-import { addLogItem, undoLog } from './shared/logger';
+import { addLogItem, markAsUndone } from './shared/logger';
 import { OperationType } from './@types/Enums';
 import { rebuildMenu } from './createMenu';
-
-const isDarwin = process.platform === 'darwin';
-const dotfiles = isDarwin ? '.' : '._';
 
 export const registerUtilsIPC = () => {
   ipcMain.handle('dirname', (_e: Event, filePath: string) => {
@@ -82,7 +79,7 @@ export const registerUtilsIPC = () => {
       addLogItem({
         operation: OperationType.DELETED,
         prevState: filePath,
-        afterState: 'Trash',
+        afterState: getTrashDirectory() + '/' + path.basename(filePath),
         canBeUndone: false,
       }),
     ]).catch((err) => console.error(err));
@@ -92,7 +89,47 @@ export const registerUtilsIPC = () => {
     return store.get('log', [] as LogItem[]);
   });
 
-  ipcMain.handle('disable-undo-log', (_e: Event, logItem: LogItem): void => {
-    undoLog(logItem);
+  ipcMain.handle('undo-operation', async (_e: Event, log: LogItem): Promise<void> => {
+    switch (log.operation) {
+      case OperationType.DELETED:
+        Promise.all([
+          fs.move(log.afterState, log.prevState),
+          markAsUndone(log),
+          addLogItem({
+            operation: OperationType.RESTORED,
+            prevState: log.afterState,
+            afterState: log.prevState,
+            canBeUndone: true,
+          }),
+        ]);
+
+        break;
+      case OperationType.MOVED:
+        Promise.all([
+          fs.move(log.afterState, log.prevState),
+          markAsUndone(log),
+          addLogItem({
+            operation: OperationType.MOVED,
+            prevState: log.afterState,
+            afterState: log.prevState,
+            canBeUndone: true,
+          }),
+        ]);
+
+        break;
+      case OperationType.RENAMED:
+        Promise.all([
+          fs.rename(log.afterState, log.prevState),
+          markAsUndone(log),
+          addLogItem({
+            operation: OperationType.RENAMED,
+            prevState: log.afterState,
+            afterState: log.prevState,
+            canBeUndone: true,
+          }),
+        ]);
+
+        break;
+    }
   });
 };

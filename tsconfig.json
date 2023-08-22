@@ -2,6 +2,7 @@
   "compilerOptions": {
     "target": "ESNext",
     "module": "ESNext",
+     "preserveConstEnums": true,
     "esModuleInterop": true,
     "moduleResolution": "Node",
     "lib": [
@@ -11,7 +12,11 @@
     "resolveJsonModule": true,
     "jsx": "react-jsx",
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "types/*": ["./src/main/@types/*"],
+    }
   },
   "include": [
     "src/**/*"
