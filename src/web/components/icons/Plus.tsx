@@ -9,7 +9,7 @@ export const Plus = memo((props: Props) => {
 
   const dimensionsMap = new Map([
     ['small', { height: 20, width: 18 }],
-    ['medium', { height: 50, width: 60 }],
+    ['medium', { height: 40, width: 50 }],
     ['large', { height: 100, width: 200 }],
   ]);
 
