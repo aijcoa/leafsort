@@ -207,5 +207,19 @@ thead th {
 }
 
 fieldset {
-  display: initial;
+  display: flex;
+}
+
+input {
+  border: none;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+* {
+  &:focus {
+    outline: none;
+  }
 }
