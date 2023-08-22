@@ -1,11 +1,11 @@
 import React, { useCallback, useContext, useState } from 'react';
-import { KeyBindContextInterface } from '../../../../main/@types/Context';
-import { KeyBindContext } from '../../../providers/KeyBindContext';
 import { Card } from '../../Card/Card';
 import { Plus } from '../../Icons/Plus';
 import { AddKeyBindModal } from '../AddKeyBindModal/AddKeyBindModal';
 import { KeyMap } from '../KeyMap/KeyMap';
 import './KeyMapList.scss';
+import { KeyBindContextInterface } from 'types/index';
+import { KeyBindContext } from '../../../providers/index';
 
 const { myAPI } = window;
 

@@ -1,4 +1,4 @@
-type Code =
+export type Code =
   | 'ar'
   | 'cs'
   | 'de'
@@ -14,7 +14,7 @@ type Code =
   | 'zh-CN'
   | 'zh-TW';
 
-declare type Locale = {
+export type Locale = {
   code: Code;
   value: string;
 };

@@ -1,10 +1,10 @@
 import { memo, useContext } from 'react';
-import { GalleryContextInterface, IElectronAPI } from '../../../main/@types/Context';
-import { GalleryContext } from '../../providers/GalleryContext';
 import { Card } from '../Card/Card';
 import { FolderOpen } from '../Icons/FolderOpen';
 import { View } from '../View/View';
 import './Gallery.scss';
+import { GalleryContextInterface, IElectronAPI } from 'types/index';
+import { GalleryContext } from '../../providers';
 
 interface Props {
   isDarwin: boolean;

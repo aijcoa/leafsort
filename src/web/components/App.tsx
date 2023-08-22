@@ -1,12 +1,11 @@
 import { useContext, useEffect } from 'react';
-import { GalleryContextInterface, KeyBindContextInterface } from '../../main/@types/Context';
-import { GalleryContext } from '../providers/GalleryContext';
-import { KeyBindContext } from '../providers/KeyBindContext';
 import { Gallery } from './Gallery/Gallery';
 import { Header } from './Header/Header';
 import { Sidebar } from './Sidebar/Sidebar';
-import './App.scss';
 import { RenameModal } from './RenameModal/RenameModal';
+import { GalleryContextInterface, KeyBindContextInterface } from 'types/index';
+import { KeyBindContext, GalleryContext } from '../providers';
+import './App.scss';
 
 const { myAPI } = window;
 
