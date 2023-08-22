@@ -3,4 +3,5 @@ export enum OperationType {
   RENAMED = 'RENAMED',
   DELETED = 'DELETED',
   UNDO = 'UNDO',
+  RESTORED = 'RESTORED',
 }

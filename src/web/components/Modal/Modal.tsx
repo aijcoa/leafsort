@@ -1,7 +1,6 @@
 import { ReactNode, memo } from 'react';
 
 interface Props {
-  isOpen: boolean;
   title: string;
   children?: ReactNode;
   onClose: () => void;
@@ -9,9 +8,7 @@ interface Props {
 }
 
 export const Modal = memo((props: Props) => {
-  const { isOpen, onClose, onSubmit, title, children } = props;
-
-  const showHideClass = isOpen ? 'modal d-block' : 'modal d-none';
+  const { onClose, onSubmit, title, children } = props;
 
   window.onkeydown = (event: KeyboardEvent) => {
     switch (event.key) {
@@ -26,7 +23,7 @@ export const Modal = memo((props: Props) => {
   };
 
   return (
-    <div className={showHideClass} onClick={onClose}>
+    <div className={'modal d-block'} onClick={onClose}>
       <section className="modal-main" onClick={(e) => e.stopPropagation()}>
         <p className="text-center">{title}</p>
         {children}

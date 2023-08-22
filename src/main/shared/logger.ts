@@ -1,4 +1,3 @@
-import { OperationType } from '../@types/Enums';
 import { store } from '../main';
 
 export const addLogItem = async (logItem: LogItem) => {
@@ -11,10 +10,10 @@ export const clearLog = () => {
   store.set('log', [] as LogItem[]);
 };
 
-export const undoLog = (logItem: LogItem) => {
-  const disabledLogItem = { ...logItem, canBeUndone: false, operation: OperationType.UNDO };
-
+export const markAsUndone = (logItem: LogItem) => {
   const logItems = store.get('log', [] as LogItem[]);
+  const disabledLogItem = { ...logItem, canBeUndone: false };
+
   const index = logItems.findIndex(
     (l: LogItem) =>
       l.afterState === logItem.afterState &&
