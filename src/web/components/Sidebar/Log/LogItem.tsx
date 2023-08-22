@@ -1,7 +1,7 @@
 import { useContext } from 'react';
-import { GalleryContextInterface } from '../../../../main/@types/Context';
 import { preventDefault } from '../../../helpers/helpers';
-import { GalleryContext } from '../../../providers/GalleryContext';
+import { GalleryContext } from '../../../providers';
+import { GalleryContextInterface } from 'types/index';
 
 const { myAPI } = window;
 

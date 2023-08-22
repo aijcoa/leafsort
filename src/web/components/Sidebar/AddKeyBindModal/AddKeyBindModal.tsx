@@ -1,4 +1,4 @@
-import { memo, ReactNode, useCallback, useContext, useEffect, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import Mousetrap from 'mousetrap';
 import { Accelerator } from '../Accelerator/Accelerator';
 
@@ -6,7 +6,7 @@ import 'mousetrap/plugins/record/mousetrap-record';
 import './AddKeyBindModal.scss';
 import { GalleryContextInterface, KeyBindContextInterface } from '../../../../main/@types/Context';
 import { KeyBindContext } from '../../../providers/KeyBindContext';
-import { GalleryContext } from '../../../providers/GalleryContext';
+import { KeyBindContextInterface } from 'types/index';
 
 const { myAPI } = window;
 

@@ -1,9 +1,9 @@
 import { memo, useContext, useEffect } from 'react';
-import { GalleryContextInterface } from '../../../main/@types/Context';
 import { GalleryContext } from '../../providers/GalleryContext';
 import { Card } from '../Card/Card';
 import KeyMapList from './KeyMapList/KeyMapList';
 import { Log } from './Log/Log';
+import { GalleryContextInterface } from 'types/index';
 
 interface Props {
   imagesSorted?: number | null;
