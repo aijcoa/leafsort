@@ -32,7 +32,7 @@ export const RenameModal = memo<Props>((props: Props) => {
   }, [originalFileName, originalFilePath]);
 
   return (
-    <Modal onSubmit={handleSubmit} onClose={onClose} isOpen={true} title={'Rename File'}>
+    <Modal onSubmit={handleSubmit} onClose={onClose} title={'Rename File'}>
       <div className="rename-modal">
         <input
           autoFocus
