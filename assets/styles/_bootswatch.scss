@@ -1,48 +1,71 @@
 // Zephyr 5.1.1
 // Bootswatch
 
-// Navbar
-.navbar {
-  font-size: $font-size-sm;
-  font-weight: 500;
+@import '/assets/styles/mixins';
 
-  .nav-item {
-    margin-left: 0.5rem;
-    margin-right: 0.5rem;
+:root {
+  @media (prefers-color-scheme: dark) {
+    @include dark-theme();
   }
 
-  .navbar-nav {
-    .nav-link {
-      border-radius: $border-radius;
-    }
+  @media (prefers-color-scheme: light) {
+    @include light-theme();
   }
 }
 
-.navbar-dark {
-  .navbar-nav {
-    .nav-link {
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-      }
-
-      &.active {
-        background-color: rgba(0, 0, 0, 0.5);
-      }
-    }
+// Base
+* {
+  &:focus {
+    outline: none;
   }
 }
 
-.navbar-light {
-  .navbar-nav {
-    .nav-link {
-      &:hover {
-        background-color: rgba(0, 0, 0, 0.03);
-      }
+html,
+body,
+#root {
+  font-family: 'JetBrains Mono-Medium', monospace;
+  height: 100%;
+  background-color: var(--bg-color);
+}
 
-      &.active {
-        background-color: rgba(0, 0, 0, 0.05);
-      }
-    }
+// Typography
+p,
+span {
+  color: $red;
+  font-size: small;
+  margin-top: 1em;
+}
+
+legend {
+  &.card-title {
+    color: var(--text-color);
+  }
+}
+
+kbd {
+  background-color: var(--bg-color-contrast);
+  color: var(--text-color-contrast);
+}
+
+// Buttons
+button {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
+}
+
+// Icons
+.icon {
+  fill: $red;
+
+  &:hover,
+  &:focus,
+  &:active {
+    fill: $white;
+    cursor: pointer;
   }
 }
 
@@ -80,8 +103,13 @@
 
 // Tables
 .table {
-  box-shadow: $box-shadow-lg;
+  box-shadow: none;
   font-size: $font-size-sm;
+
+  tbody tr td {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+  }
 }
 
 thead th {
@@ -94,62 +122,11 @@ thead th {
   box-shadow: $box-shadow;
 }
 
-// Navs
-.nav-tabs {
-  font-weight: 500;
+input {
+  border: none;
 
-  .nav-link {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-    border-width: 0 0 1px;
-  }
-
-  .nav-link.active,
-  .nav-item.show .nav-link {
-    box-shadow: inset 0 -2px 0 $primary;
-  }
-}
-
-.nav-pills {
-  font-weight: 500;
-}
-
-.pagination {
-  font-size: $font-size-sm;
-  font-weight: 500;
-
-  .page-link {
-    box-shadow: $box-shadow;
-  }
-}
-
-.breadcrumb {
-  border: 1px solid white;
-  border-radius: $border-radius;
-  box-shadow: $box-shadow;
-  font-size: $font-size-sm;
-  font-weight: 500;
-
-  &-item {
-    padding: 1rem 0.5rem 1rem 0;
-  }
-}
-
-.breadcrumb-item + .breadcrumb-item::before {
-  padding-right: 1rem;
-}
-
-// Indicators
-.alert {
-  .btn-close {
-    color: inherit;
-  }
-}
-
-.badge {
-  &.bg-secondary,
-  &.bg-light {
-    color: $gray-900;
+  &:focus {
+    outline: none;
   }
 }
 
@@ -160,7 +137,7 @@ thead th {
 
 .card-body {
   width: 100%;
-  background-color: $gray-900;
+  background-color: var(--bg-color);
   padding-top: 0;
 }
 
@@ -183,7 +160,7 @@ thead th {
 }
 
 .border-gray {
-  border: 1px solid $gray-700;
+  border: 1px solid var(--border-color);
 }
 
 .h-10 {
@@ -208,18 +185,4 @@ thead th {
 
 fieldset {
   display: flex;
-}
-
-input {
-  border: none;
-
-  &:focus {
-    outline: none;
-  }
-}
-
-* {
-  &:focus {
-    outline: none;
-  }
 }

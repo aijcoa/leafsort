@@ -30,17 +30,14 @@ export const KeyMapList = () => {
         classes="col-10 h-100"
         title="Key | Path">
         {keyBinds.length ? (
-          <table className="table key-mapping table-hover">
+          <table cellSpacing={0} className="table key-mapping table-hover">
             <tbody>
               {keyBinds &&
                 keyBinds.map((keyMap, index) => (
                   <KeyMap key={index} keyMap={keyMap} onRemoveKeyBind={removeKeyBind} />
                 ))}
-              <tr className="add-key-bind">
-                <td colSpan={2} className="text-center path">
-                  Add key mapping
-                </td>
-                <td>
+              <tr>
+                <td colSpan={3} className="text-end">
                   <button onClick={() => setModalOpen(true)} className="icon" title="Add key bind">
                     <Plus size="small" />
                   </button>

@@ -14,7 +14,7 @@ export const Sidebar = memo(() => {
   }, [getLogItems, sortedImages]);
 
   return (
-    <div className="col-3 h-100">
+    <div className="col-sm-3 h-100">
       <div className="row h-10">
         <Card classes="col-10 h-100" bodyClasses={'d-flex align-items-center'} title="Status">
           <span>{sortedImages ? `Sorted ${sortedImages} files` : '...'}</span>
