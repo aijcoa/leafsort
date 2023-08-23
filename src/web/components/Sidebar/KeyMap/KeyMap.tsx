@@ -21,7 +21,7 @@ export const KeyMap = memo((props: Props) => {
         <Accelerator accelerator={keyMap?.accelerator} />
       </td>
       <td className="path">{keyMap.path && <code>{getFolderFromPath(keyMap.path)}</code>}</td>
-      <td>
+      <td className="text-end">
         <button
           className="icon delete-key-bind"
           title="Remove Bind"

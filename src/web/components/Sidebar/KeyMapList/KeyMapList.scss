@@ -1,28 +1,12 @@
 @import '/assets/styles/variables';
 
 table.key-mapping {
-  margin-top: 0.5em;
-  box-shadow: none;
-
-  col.path-column {
-    padding-left: 1em;
-  }
-
   td,
   th {
-    text-align: left;
     box-shadow: none;
   }
 
-  tr {
-    &:last-of-type {
-      position: relative;
-      top: 1em;
-    }
-  }
-
   th {
-    text-transform: capitalize;
     padding: 0;
     border: 0;
     color: $red;
@@ -30,12 +14,10 @@ table.key-mapping {
 
   td {
     padding: 0.275em 0.175em;
-    border: 0;
   }
 
-  .bind {
-    padding-left: 0.5em;
-    margin: 0.4em 0.5em 0 0;
+  .add-key-bind {
+    cursor: pointer;
   }
 }
 
