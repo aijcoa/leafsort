@@ -1,5 +1,9 @@
+@import '/assets/styles/variables';
+
 kbd {
   &.accelerator {
+    color: $black;
+
     &:not(:first-of-type) {
       margin-left: 0.3em;
     }

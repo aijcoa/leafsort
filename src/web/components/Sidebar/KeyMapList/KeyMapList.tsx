@@ -12,7 +12,6 @@ const { myAPI } = window;
 export const KeyMapList = () => {
   const keyBindContext = useContext<KeyBindContextInterface>(KeyBindContext);
   const { keyBinds, getKeyBinds } = keyBindContext;
-
   const [isModalOpen, setModalOpen] = useState<boolean>(false);
 
   const removeKeyBind = useCallback(
@@ -24,7 +23,12 @@ export const KeyMapList = () => {
 
   return (
     <>
-      <Card classes="col-10 h-100" title="Key | Path">
+      <Card
+        bodyClasses={
+          keyBinds.length === 0 ? 'justify-content-center align-items-center d-flex' : ''
+        }
+        classes="col-10 h-100"
+        title="Key | Path">
         {keyBinds.length ? (
           <table className="table key-mapping table-hover">
             <tbody>
@@ -37,26 +41,22 @@ export const KeyMapList = () => {
                   Add key mapping
                 </td>
                 <td>
-                  <div onClick={() => setModalOpen(true)} className="icon" title="Add key bind">
+                  <button onClick={() => setModalOpen(true)} className="icon" title="Add key bind">
                     <Plus size="small" />
-                  </div>
+                  </button>
                 </td>
               </tr>
             </tbody>
           </table>
         ) : (
-          <div className="icon no-binds" title="Add key bind" onClick={() => setModalOpen(true)}>
+          <button className="icon no-binds" title="Add key bind" onClick={() => setModalOpen(true)}>
             <Plus size="medium" />
-          </div>
+          </button>
         )}
       </Card>
 
       {isModalOpen && (
-        <AddKeyBindModal
-          onSave={getKeyBinds}
-          isOpen={isModalOpen}
-          onClose={() => setModalOpen(false)}
-        />
+        <AddKeyBindModal onSubmit={getKeyBinds} onClose={() => setModalOpen(false)} />
       )}
     </>
   );

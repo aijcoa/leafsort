@@ -1,3 +1,5 @@
+@import '/assets/styles/variables';
+
 table.key-mapping {
   margin-top: 0.5em;
   box-shadow: none;
@@ -14,7 +16,8 @@ table.key-mapping {
 
   tr {
     &:last-of-type {
-      border-top: 1px solid rgb(237, 134, 134);
+      position: relative;
+      top: 1em;
     }
   }
 
@@ -22,7 +25,7 @@ table.key-mapping {
     text-transform: capitalize;
     padding: 0;
     border: 0;
-    color: rgb(237, 134, 134);
+    color: $red;
   }
 
   td {
@@ -34,16 +37,6 @@ table.key-mapping {
     padding-left: 0.5em;
     margin: 0.4em 0.5em 0 0;
   }
-
-  .path {
-    font-size: 0.9em;
-  }
-}
-
-.no-binds {
-  position: absolute;
-  top: 45%;
-  left: 40%;
 }
 
 code {
