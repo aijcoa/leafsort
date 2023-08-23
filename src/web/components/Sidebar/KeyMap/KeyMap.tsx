@@ -22,12 +22,12 @@ export const KeyMap = memo((props: Props) => {
       </td>
       <td className="path">{keyMap.path && <code>{getFolderFromPath(keyMap.path)}</code>}</td>
       <td>
-        <div
+        <button
           className="icon delete-key-bind"
           title="Remove Bind"
           onClick={() => onRemoveKeyBind(keyMap)}>
           <Trash />
-        </div>
+        </button>
       </td>
     </tr>
   );

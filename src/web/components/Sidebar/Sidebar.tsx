@@ -5,13 +5,7 @@ import KeyMapList from './KeyMapList/KeyMapList';
 import { Log } from './Log/Log';
 import { GalleryContextInterface } from 'types/index';
 
-interface Props {
-  imagesSorted?: number | null;
-}
-
-export const Sidebar = memo((props: Props) => {
-  const { imagesSorted } = props;
-
+export const Sidebar = memo(() => {
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
   const { logItems, getLogItems, sortedImages } = galleryContext;
 
@@ -22,8 +16,8 @@ export const Sidebar = memo((props: Props) => {
   return (
     <div className="col-3 h-100">
       <div className="row h-10">
-        <Card classes="col-10 h-100" title="Status">
-          {imagesSorted ? <p>Sorted {imagesSorted} files</p> : <p>...</p>}
+        <Card classes="col-10 h-100" bodyClasses={'d-flex align-items-center'} title="Status">
+          <span>{sortedImages ? `Sorted ${sortedImages} files` : '...'}</span>
         </Card>
       </div>
       <div className="row h-50">

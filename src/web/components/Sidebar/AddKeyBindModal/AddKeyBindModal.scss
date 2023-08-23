@@ -34,13 +34,19 @@ table {
       cursor: cell;
 
       .accelerator-output {
-        text-align: center;
-        margin-top: 1em;
+        padding: 0.5em;
+        justify-content: center;
+        display: flex;
       }
     }
 
     &.select-path {
       cursor: pointer;
+      background-color: $gray-800;
+
+      &:hover {
+        background-color: $gray-900;
+      }
     }
   }
 }
