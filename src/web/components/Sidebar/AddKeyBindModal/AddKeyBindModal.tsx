@@ -1,11 +1,11 @@
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import Mousetrap from 'mousetrap';
-import { Accelerator } from '../Accelerator/Accelerator';
 import 'mousetrap/plugins/record/mousetrap-record';
-import './AddKeyBindModal.scss';
+import { Accelerator } from '../Accelerator/Accelerator';
 import { KeyBindContext } from '../../../providers/KeyBindContext';
 import { Modal } from '../../Modal/Modal';
 import { KeyBindContextInterface } from 'types/index';
+import './AddKeyBindModal.scss';
 
 const { myAPI } = window;
 

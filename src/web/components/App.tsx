@@ -80,8 +80,8 @@ export const App = () => {
   }, [imgURL, keyBinds, registerKeyBinds]);
 
   return (
-    <div className="row gx-3 h-100 justify-content-center">
-      <div className="col-9 h-100">
+    <div className="row gx-3 h-100">
+      <div className="col-md-9 h-100">
         <div className="row gy-0 h-100">
           <Header folderPath={folderPath} />
           <Gallery

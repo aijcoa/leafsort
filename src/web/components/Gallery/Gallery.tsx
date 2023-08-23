@@ -71,7 +71,7 @@ export const Gallery = memo((props: Props) => {
         <Card bodyClasses="gallery" classes="h-100" title="Select a folder to begin">
           <div className="folder">
             <div className="icon" title="Open..." onClick={onClickOpen}>
-              <FolderOpen size="large" />
+              <FolderOpen size="medium" />
             </div>
           </div>
         </Card>
