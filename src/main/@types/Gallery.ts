@@ -6,14 +6,14 @@ export interface GalleryContextInterface {
   getLogItems: () => Promise<LogItem[]>;
   sortedImages: number;
   setSortedImages(sortedImages: number): void;
-  imgList: string[];
-  setImgList(imgList: string[]): void;
-  imgURL: string;
-  setImgURL(imgURL: string): void;
+  fileList: string[];
+  setImgList(fileList: string[]): void;
+  filePath: string;
+  setFilePath(filePath: string): void;
   onNext(): Promise<void>;
   onPrevious(): Promise<void>;
   onTrash(): Promise<void>;
   onMoveFile: (destinationPath: string) => Promise<void>;
   onClickOpen(): Promise<void>;
-  getImagesFromPath(_e: Event | null, filefolderPath: string): Promise<void>;
+  getFilesFromPath(_e: Event | null, filefolderPath: string): Promise<void>;
 }

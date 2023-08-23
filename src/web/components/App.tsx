@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Gallery } from './Gallery/Gallery';
 import { Header } from './Header/Header';
 import { Sidebar } from './Sidebar/Sidebar';
@@ -11,6 +11,7 @@ const { myAPI } = window;
 
 export const App = () => {
   const isDarwin = navigator.userAgentData.platform === 'macOS';
+  const [showRenameModal, setShowRenameModal] = useState<boolean>(false);
 
   const keyBindContext = useContext<KeyBindContextInterface>(KeyBindContext);
   const { keyBinds, getKeyBinds, registerKeyBinds } = keyBindContext;
@@ -21,13 +22,14 @@ export const App = () => {
     onPrevious,
     folderPath,
     setFolderPath,
-    getImagesFromPath,
+    getFilesFromPath,
     onTrash,
-    onRenameMenu,
-    imgURL,
-    showRenameModal,
-    setShowRenameModal,
+    filePath: filePath,
   } = galleryContext;
+
+  const handleOnRenameMenu = useCallback(async () => {
+    setShowRenameModal(!showRenameModal);
+  }, [showRenameModal]);
 
   useEffect(() => {
     const unlistenFn = myAPI.menuNext(onNext);
@@ -51,18 +53,18 @@ export const App = () => {
   }, [onTrash]);
 
   useEffect(() => {
-    const unlistenFn = myAPI.menuRename(onRenameMenu);
+    const unlistenFn = myAPI.menuRename(handleOnRenameMenu);
     return () => {
       unlistenFn();
     };
-  }, [onRenameMenu]);
+  }, [handleOnRenameMenu]);
 
   useEffect(() => {
-    const unlistenFn = myAPI.menuOpen(getImagesFromPath);
+    const unlistenFn = myAPI.menuOpen(getFilesFromPath);
     return () => {
       unlistenFn();
     };
-  }, [getImagesFromPath]);
+  }, [getFilesFromPath]);
 
   useEffect(() => {
     const title = !folderPath ? 'Leaf | Sort' : `Sorting - ${folderPath}`;
@@ -71,13 +73,13 @@ export const App = () => {
 
   useEffect(() => {
     getKeyBinds();
-  }, [getKeyBinds, imgURL, registerKeyBinds]);
+  }, [getKeyBinds, filePath, registerKeyBinds]);
 
   useEffect(() => {
-    if (!imgURL || !keyBinds) return;
+    if (!filePath || !keyBinds) return;
 
     registerKeyBinds(keyBinds);
-  }, [imgURL, keyBinds, registerKeyBinds]);
+  }, [filePath, keyBinds, registerKeyBinds]);
 
   return (
     <div className="row gx-3 h-100">
@@ -88,7 +90,7 @@ export const App = () => {
             isDarwin={isDarwin}
             myAPI={myAPI}
             setFolderPath={setFolderPath}
-            imgURL={imgURL}
+            filePath={filePath}
           />
         </div>
       </div>
@@ -97,7 +99,7 @@ export const App = () => {
       {showRenameModal && (
         <RenameModal
           myAPI={myAPI}
-          originalFilePath={imgURL}
+          originalFilePath={filePath}
           onClose={() => setShowRenameModal(false)}
         />
       )}

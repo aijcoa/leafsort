@@ -14,7 +14,7 @@ export const LogItem = (props: Props) => {
   const { isFullScreen, logItem } = props;
 
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
-  const { setSortedImages, sortedImages, getLogItems, getImagesFromPath, folderPath } =
+  const { setSortedImages, sortedImages, getLogItems, getFilesFromPath, folderPath } =
     galleryContext;
 
   const hideShowClass = isFullScreen ? 'log-action' : 'd-none';
@@ -27,7 +27,7 @@ export const LogItem = (props: Props) => {
     Promise.all([
       await myAPI.undoOperation(operation),
       await getLogItems(),
-      await getImagesFromPath(null, folderPath),
+      await getFilesFromPath(null, folderPath),
     ]).catch((err) => console.error(err));
 
     sortedImages > 0 ?? setSortedImages(sortedImages - 1);
