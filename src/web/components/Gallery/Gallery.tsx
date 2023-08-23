@@ -9,17 +9,17 @@ import { GalleryContext } from '../../providers';
 interface Props {
   isDarwin: boolean;
   myAPI: IElectronAPI;
-  imgURL?: string;
+  filePath?: string;
   setFolderPath: (path: string) => void;
 }
 
 export const Gallery = memo((props: Props) => {
-  const { isDarwin, myAPI, setFolderPath, imgURL } = props;
+  const { isDarwin, myAPI, setFolderPath, filePath } = props;
 
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
-  const { onClickOpen, setImgURL, setImgList } = galleryContext;
+  const { onClickOpen, setFilePath: setFilePath, setImgList } = galleryContext;
 
-  const preventDefault = (e: React.DragEvent<HTMLDivElement>) => {
+  const preventDefault = (e: React.DragEvent<HTMLDivElement> | React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
   };
@@ -32,26 +32,25 @@ export const Gallery = memo((props: Props) => {
 
       if (file.name.startsWith('.')) return;
 
-      const imgs = await myAPI.readdir(file.path);
+      const files = await myAPI.readdir(file.path);
 
-      if (!imgs || imgs.length === 0) {
+      if (!files || files.length === 0) {
         window.location.reload();
         return;
       }
 
       setFolderPath(file.path);
-      setImgList(imgs);
-      setImgURL(imgs[0]);
+      setImgList(files);
+      setFilePath(files[0]);
     }
   };
 
   const onContextMenu = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     if (isDarwin) {
-      e.preventDefault();
       return false;
     }
 
-    e.preventDefault();
+    preventDefault(e);
     myAPI.contextMenu();
   };
 
@@ -63,9 +62,9 @@ export const Gallery = memo((props: Props) => {
       onDragEnter={preventDefault}
       onDragLeave={preventDefault}
       onContextMenu={onContextMenu}>
-      {imgURL ? (
-        <Card classes="h-100" title={imgURL}>
-          <View url={imgURL} />
+      {filePath ? (
+        <Card classes="h-100" title={filePath}>
+          <View url={filePath} />
         </Card>
       ) : (
         <Card bodyClasses="gallery" classes="h-100" title="Select a folder to begin">

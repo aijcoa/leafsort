@@ -18,12 +18,12 @@ export const RenameModal = memo<Props>((props: Props) => {
   const originalFileName = getFileNameFromPath(originalFilePath);
 
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
-  const { getImagesFromPath, folderPath } = galleryContext;
+  const { getFilesFromPath, folderPath } = galleryContext;
 
   const handleSubmit = async () => {
     if (!fileName) return;
     await myAPI.renameFile(originalFilePath, fileName);
-    await getImagesFromPath(null, folderPath);
+    await getFilesFromPath(null, folderPath);
     onClose();
   };
 

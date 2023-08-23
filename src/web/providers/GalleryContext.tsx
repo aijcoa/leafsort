@@ -12,30 +12,26 @@ export const GalleryContext = createContext<GalleryContextInterface>({
   getLogItems: () => Promise.resolve([]),
   sortedImages: 0,
   setSortedImages: (sortedImages: number) => 0,
-  imgList: [],
-  setImgList: (imgList: string[]) => [],
-  imgURL: '',
-  setImgURL: (imgURL: string) => '',
-  showRenameModal: false,
-  setShowRenameModal: (showRenameModal: boolean) => false,
+  fileList: [],
+  setImgList: (fileList: string[]) => [],
+  filePath: '',
+  setFilePath: (filePath: string) => '',
   onNext: () => Promise.resolve(),
   onPrevious: () => Promise.resolve(),
   onTrash: () => Promise.resolve(),
   onMoveFile: (destinationPath: string) => Promise.resolve(),
-  onRenameMenu: () => Promise.resolve(),
   onClickOpen: () => Promise.resolve(),
-  getImagesFromPath: (_e: Event, filefolderPath: string) => Promise.resolve(),
+  getFilesFromPath: (_e: Event, folderPath: string) => Promise.resolve(),
 });
 
 export const GalleryContextProvider = (props: {
   children: React.ReactNode;
 }): React.ReactElement => {
   const [folderPath, setFolderPath] = useState('');
-  const [imgURL, setImgURL] = useState<string>('');
-  const [imgList, setImgList] = useState<string[]>([]);
+  const [filePath, setFilePath] = useState<string>('');
+  const [fileList, setImgList] = useState<string[]>([]);
   const [logItems, setLogItems] = useState<LogItem[]>([]);
   const [sortedImages, setSortedImages] = useState<number>(0);
-  const [showRenameModal, setShowRenameModal] = useState<boolean>(false);
 
   const removeImageFromState = useCallback(
     async (index: number) => {
@@ -49,88 +45,84 @@ export const GalleryContextProvider = (props: {
       setImgList(newList);
 
       if (index > newList.length - 1) {
-        setImgURL(newList[0]);
+        setFilePath(newList[0]);
       } else {
-        setImgURL(newList[index]);
+        setFilePath(newList[index]);
       }
     },
     [folderPath],
   );
 
-  const getImagesFromPath = useCallback(async (_e: Event | null, filefolderPath: string) => {
-    if (!filefolderPath) return;
+  const getFilesFromPath = useCallback(async (_e: Event | null, folderPath: string) => {
+    if (!folderPath) return;
 
-    setFolderPath(filefolderPath);
+    setFolderPath(folderPath);
 
-    const imgs = await myAPI.readdir(filefolderPath);
-
-    if (!imgs || imgs.length === 0) {
+    const files = await myAPI.readdir(folderPath);
+    if (!files || files.length === 0) {
       window.location.reload();
+
       return;
     }
 
-    setImgList(imgs);
-    setImgURL(imgs[0]);
+    setImgList(files);
+    setFilePath(files[0]);
   }, []);
 
   const onNext = useCallback(async () => {
-    if (!imgURL) return;
+    if (!filePath) return;
 
-    const index = imgList.indexOf(imgURL);
-    if (index === imgList.length - 1 || index === -1) {
-      setImgURL(imgList[0]);
+    const index = fileList.indexOf(filePath);
+    if (index === fileList.length - 1 || index === -1) {
+      setFilePath(fileList[0]);
     } else {
-      setImgURL(imgList[index + 1]);
+      setFilePath(fileList[index + 1]);
     }
-  }, [imgList, imgURL]);
+  }, [fileList, filePath]);
 
   const onPrevious = useCallback(async () => {
-    if (!imgURL) return;
+    if (!filePath) return;
 
-    const index = imgList.indexOf(imgURL);
+    const index = fileList.indexOf(filePath);
     if (index === 0) {
-      setImgURL(imgList[imgList.length - 1]);
+      setFilePath(fileList[fileList.length - 1]);
     } else if (index === -1) {
-      setImgURL(imgList[0]);
+      setFilePath(fileList[0]);
     } else {
-      setImgURL(imgList[index - 1]);
+      setFilePath(fileList[index - 1]);
     }
-  }, [imgList, imgURL]);
+  }, [fileList, filePath]);
 
   const onTrash = useCallback(async () => {
-    if (!imgList || imgList.length === 0) {
+    if (!fileList || fileList.length === 0) {
       window.location.reload();
       return;
     }
 
-    const index = imgList.indexOf(imgURL);
+    const index = fileList.indexOf(filePath);
 
-    await myAPI.moveToTrash(imgURL);
+    await myAPI.moveToTrash(filePath);
     await removeImageFromState(index);
-  }, [imgList, imgURL, removeImageFromState]);
-
-  const onRenameMenu = useCallback(async () => {
-    setShowRenameModal(!showRenameModal);
-  }, [showRenameModal]);
+  }, [fileList, filePath, removeImageFromState]);
 
   const onClickOpen = useCallback(async () => {
-    const filefolderPath = await myAPI.openDialog();
-    if (!filefolderPath) return;
+    const folderPath = await myAPI.openDialog();
+    if (!folderPath) return;
 
-    await getImagesFromPath(null, filefolderPath);
-    setFolderPath(filefolderPath);
-  }, [getImagesFromPath]);
+    await getFilesFromPath(null, folderPath);
+    setFolderPath(folderPath);
+  }, [getFilesFromPath]);
 
   const onMoveFile = async (destinationPath: string) => {
-    if (!imgURL) {
+    if (!filePath) {
       alert('Select a folder to sort');
       return;
     }
 
-    const index = imgList.indexOf(imgURL);
+    const index = fileList.indexOf(filePath);
 
     Promise.all([
-      myAPI.moveFile(imgURL, destinationPath),
+      myAPI.moveFile(filePath, destinationPath),
       getLogItems(),
       removeImageFromState(index),
     ]);
@@ -149,9 +141,9 @@ export const GalleryContextProvider = (props: {
   return (
     <GalleryContext.Provider
       value={{
-        imgURL,
-        setImgURL,
-        imgList,
+        filePath: filePath,
+        setFilePath: setFilePath,
+        fileList,
         setImgList,
         folderPath,
         setFolderPath,
@@ -160,15 +152,12 @@ export const GalleryContextProvider = (props: {
         getLogItems,
         sortedImages,
         setSortedImages,
-        showRenameModal,
-        setShowRenameModal,
         onNext,
         onPrevious,
         onClickOpen,
-        getImagesFromPath,
+        getFilesFromPath,
         onTrash,
         onMoveFile,
-        onRenameMenu,
       }}>
       {props.children}
     </GalleryContext.Provider>
