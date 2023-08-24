@@ -43,7 +43,7 @@ legend {
 }
 
 kbd {
-  background-color: var(--bg-color-contrast);
+  background-color: var(--card-bg-color-contrast);
   color: var(--text-color-contrast);
 }
 
@@ -107,7 +107,7 @@ button {
   font-size: $font-size-sm;
 
   tbody tr td {
-    background-color: var(--bg-color);
+    background-color: var(--card-bg-color);
     color: var(--text-color);
   }
 }
@@ -137,7 +137,7 @@ input {
 
 .card-body {
   width: 100%;
-  background-color: var(--bg-color);
+  background-color: var(--card-bg-color);
   padding-top: 0;
 }
 
@@ -185,4 +185,25 @@ input {
 
 fieldset {
   display: flex;
+}
+
+// Modal
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.modal-main {
+  position: fixed;
+  background: $gray-800;
+  min-width: 60%;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }

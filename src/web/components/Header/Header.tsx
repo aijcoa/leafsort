@@ -16,7 +16,10 @@ export const Header = memo((props: Props) => {
   const title: string = !folderPath ? 'Leaf | Sort' : `Sorting`;
 
   return (
-    <Card bodyClasses="header flex-row" classes="col-xs-12 h-10 d-flex" title={title}>
+    <Card
+      bodyClasses="header flex-row align-items-center"
+      classes="col-xs-12 h-10 d-flex"
+      title={title}>
       {folderPath ? (
         <section className="d-flex flex-row align-items-baseline gap-3">
           <button className="icon folder" title="Open" onClick={onClickOpen}>

@@ -1,16 +1,18 @@
 @import '/assets/styles/variables';
 
 @mixin dark-theme {
-  --bg-color: #{$gray-900};
-  --bg-color-contrast: #{$gray-100};
+  --bg-color: #{$black};
+  --card-bg-color: #{$gray-900};
+  --card-bg-color-contrast: #{$gray-100};
   --text-color: #{$gray-400};
   --text-color-contrast: #{$gray-900};
   --border-color: #{$gray-700};
 }
 
 @mixin light-theme {
-  --bg-color: #{$gray-200};
-  --bg-color-contrast: #{$gray-700};
+  --bg-color: #{$gray-100};
+  --card-bg-color: #{$gray-200};
+  --card-bg-color-contrast: #{$gray-700};
   --text-color: #{$gray-700};
   --text-color-contrast: #{$gray-100};
   --border-color: #{$red};

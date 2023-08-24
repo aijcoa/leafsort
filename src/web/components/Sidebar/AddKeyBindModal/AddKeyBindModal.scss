@@ -1,25 +1,5 @@
 @import '/assets/styles/variables';
 
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.2);
-}
-
-.modal-main {
-  position: fixed;
-  background: $gray-800;
-  width: 80%;
-  height: auto;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-}
-
 table {
   &.store-key-bind {
     margin-bottom: 0;

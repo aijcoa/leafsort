@@ -20,9 +20,9 @@
 
   .log-item,
   .log-action {
-    border: 1px solid $gray-700;
+    border-bottom: 1px solid $gray-700;
+    border-top: 1px solid $gray-700;
     font-size: x-small;
     padding: 0.5em;
-    border-bottom: 1px solid $gray-700;
   }
 }
