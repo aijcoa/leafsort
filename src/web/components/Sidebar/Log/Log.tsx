@@ -10,9 +10,9 @@ interface Props {
 
 export const Log = (props: Props) => {
   const { logItems } = props;
-  const [isLogMoadalOpen, setLogModalOpen] = useState<boolean>(false);
+  const [isLogModalOpen, setLogModalOpen] = useState<boolean>(false);
 
-  const handleOnClick = () => logItems.length > 0 && setLogModalOpen(!isLogMoadalOpen);
+  const handleOnClick = () => logItems.length > 0 && setLogModalOpen(!isLogModalOpen);
 
   const renderLogTable = (isModalTable: boolean) => {
     return (
@@ -28,13 +28,13 @@ export const Log = (props: Props) => {
 
   return (
     <>
-      <div onClick={handleOnClick}>
-        <Card bodyClasses="overflow-auto log-body flex-row" classes="col-10 h-100" title="Log">
+      <div className="h-100" onClick={handleOnClick}>
+        <Card bodyClasses="overflow-auto log-body" classes="col-10 h-100" title="Log">
           {renderLogTable(false)}
         </Card>
       </div>
 
-      {isLogMoadalOpen && (
+      {isLogModalOpen && (
         <Modal
           title={'Log'}
           onClose={() => setLogModalOpen(false)}

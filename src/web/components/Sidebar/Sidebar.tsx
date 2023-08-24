@@ -16,8 +16,11 @@ export const Sidebar = memo(() => {
   return (
     <div className="col-sm-3 d-none d-sm-none d-md-block h-100">
       <div className="row h-10">
-        <Card classes="col-10 h-100" bodyClasses={'d-flex align-items-center'} title="Status">
-          <span>{sortedImages ? `Sorted ${sortedImages} files` : '...'}</span>
+        <Card
+          classes="col-10 h-100"
+          bodyClasses={'flex-row justify-content-center align-items-center'}
+          title="Status">
+          <span className="m-0">{sortedImages ? `Sorted ${sortedImages} files` : '...'}</span>
         </Card>
       </div>
       <div className="row h-50">

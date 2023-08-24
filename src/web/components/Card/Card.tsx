@@ -12,7 +12,7 @@ export const Card = (props: Props) => {
   const { title, children, classes = '', bodyClasses = '' } = props;
 
   const parentClasses = `card ${classes}`;
-  const childClasses = `card-body border-gray p-2 ${bodyClasses}`;
+  const childClasses = `card-body border-gray p-2 h-100 ${bodyClasses}`;
 
   return (
     <div className={parentClasses}>
