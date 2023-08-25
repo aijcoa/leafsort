@@ -13,9 +13,9 @@
     "jsx": "react-jsx",
     "strict": true,
     "skipLibCheck": true,
-    "baseUrl": "./",
+    "baseUrl": "./src/main",
     "paths": {
-      "types/*": ["./src/main/@types/*"],
+      "types/*": ["./src/@types/*"],
     }
   },
   "include": [

@@ -3,8 +3,8 @@ import { Gallery } from './Gallery/Gallery';
 import { Header } from './Header/Header';
 import { Sidebar } from './Sidebar/Sidebar';
 import { RenameModal } from './RenameModal/RenameModal';
-import { GalleryContextInterface, KeyBindContextInterface } from 'types/index';
 import { KeyBindContext, GalleryContext } from '../providers';
+import { GalleryContextInterface, KeyBindContextInterface } from '@types';
 import './App.scss';
 
 const { myAPI } = window;
@@ -18,14 +18,50 @@ export const App = () => {
 
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
   const {
-    onNext,
-    onPrevious,
     folderPath,
     setFolderPath,
     getFilesFromPath,
-    onTrash,
-    filePath: filePath,
+    filePath,
+    setFilePath,
+    fileList,
+    removeIndexFromState,
   } = galleryContext;
+
+  const onNext = useCallback(async () => {
+    if (!filePath) return;
+
+    const index = fileList.indexOf(filePath);
+    if (index === fileList.length - 1 || index === -1) {
+      setFilePath(fileList[0]);
+    } else {
+      setFilePath(fileList[index + 1]);
+    }
+  }, [fileList, filePath, setFilePath]);
+
+  const onPrevious = useCallback(async () => {
+    if (!filePath) return;
+
+    const index = fileList.indexOf(filePath);
+    if (index === 0) {
+      setFilePath(fileList[fileList.length - 1]);
+    } else if (index === -1) {
+      setFilePath(fileList[0]);
+    } else {
+      setFilePath(fileList[index - 1]);
+    }
+  }, [fileList, filePath, setFilePath]);
+
+  const onTrash = useCallback(async () => {
+    if (!fileList || fileList.length === 0) {
+      window.location.reload();
+      return;
+    }
+
+    const index = fileList.indexOf(filePath);
+
+    await myAPI.moveToTrash(filePath);
+    await removeIndexFromState(index);
+  }, [fileList, filePath, removeIndexFromState]);
 
   const handleOnRenameMenu = useCallback(async () => {
     setShowRenameModal(!showRenameModal);

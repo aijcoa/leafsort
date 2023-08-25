@@ -37,7 +37,7 @@ export function createWindow(): BrowserWindow {
     },
   });
 
-  if (!isDarwin) mainWindow.setMenuBarVisibility(store.get('showmenu'));
+  if (!isDarwin) mainWindow.setMenuBarVisibility(store.get('showMenu'));
   nativeTheme.themeSource = store.get('darkMode') ? 'dark' : 'light';
 
   const menu = createMenu(mainWindow, store);
@@ -58,8 +58,8 @@ export function createWindow(): BrowserWindow {
         return;
       }
 
-      mainWindow.webContents.send('menu-open', openfile);
-      openfile = null;
+      mainWindow.webContents.send('menu-open', openFile);
+      openFile = null;
     }
   });
 
