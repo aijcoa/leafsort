@@ -2,7 +2,7 @@
 import React, { createContext, useCallback, useContext, useState } from 'react';
 import Mousetrap from 'mousetrap';
 import { GalleryContext } from './GalleryContext';
-import { GalleryContextInterface, KeyBindContextInterface } from 'types/index';
+import { GalleryContextInterface, KeyBindContextInterface } from '@types';
 
 const { myAPI } = window;
 

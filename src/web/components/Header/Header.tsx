@@ -1,9 +1,9 @@
 import { memo, useContext } from 'react';
 import { Card } from '../Card/Card';
 import { FolderOpen } from '../Icons/FolderOpen';
-import './Header.scss';
-import { GalleryContextInterface } from 'types/index';
+import { GalleryContextInterface } from '@types';
 import { GalleryContext } from '../../providers';
+import './Header.scss';
 
 interface Props {
   folderPath?: string;

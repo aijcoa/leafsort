@@ -3,9 +3,9 @@ import { Card } from '../../Card/Card';
 import { Plus } from '../../Icons/Plus';
 import { AddKeyBindModal } from '../AddKeyBindModal/AddKeyBindModal';
 import { KeyMap } from '../KeyMap/KeyMap';
-import './KeyMapList.scss';
-import { KeyBindContextInterface } from 'types/index';
 import { KeyBindContext } from '../../../providers/index';
+import { KeyBindContextInterface } from '@types';
+import './KeyMapList.scss';
 
 const { myAPI } = window;
 

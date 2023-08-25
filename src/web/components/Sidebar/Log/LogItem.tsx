@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { preventDefault } from '../../../helpers/helpers';
-import { GalleryContext } from '../../../providers';
-import { GalleryContextInterface } from 'types/index';
+import { GalleryContext, LogContext } from '../../../providers';
+import { GalleryContextInterface, LogContextInterface } from '@types';
 
 const { myAPI } = window;
 
@@ -14,8 +14,10 @@ export const LogItem = (props: Props) => {
   const { isFullScreen, logItem } = props;
 
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
-  const { setSortedImages, sortedImages, getLogItems, getFilesFromPath, folderPath } =
-    galleryContext;
+  const { setSortedImages, sortedImages, getFilesFromPath, folderPath } = galleryContext;
+
+  const logContext = useContext<LogContextInterface>(LogContext);
+  const { getLogItems } = logContext;
 
   const hideShowClass = isFullScreen ? 'log-action' : 'd-none';
 

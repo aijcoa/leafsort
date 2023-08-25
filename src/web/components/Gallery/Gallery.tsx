@@ -2,9 +2,9 @@ import { memo, useContext } from 'react';
 import { Card } from '../Card/Card';
 import { FolderOpen } from '../Icons/FolderOpen';
 import { View } from '../View/View';
-import './Gallery.scss';
-import { GalleryContextInterface, IElectronAPI } from 'types/index';
 import { GalleryContext } from '../../providers';
+import { GalleryContextInterface, IElectronAPI } from '@types';
+import './Gallery.scss';
 
 interface Props {
   isDarwin: boolean;

@@ -1,25 +1,21 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import React, { createContext, useCallback, useState } from 'react';
-import { GalleryContextInterface } from 'types/index';
+import React, { createContext, useCallback, useContext, useState } from 'react';
+import { LogContext } from './LogContext';
+import { GalleryContextInterface, LogContextInterface } from '@types';
 
 const { myAPI } = window;
 
 export const GalleryContext = createContext<GalleryContextInterface>({
   folderPath: '',
   setFolderPath: (folderPath: string) => '',
-  logItems: [],
-  setLogItems: (logItems: LogItem[]) => [],
-  getLogItems: () => Promise.resolve([]),
   sortedImages: 0,
   setSortedImages: (sortedImages: number) => 0,
   fileList: [],
   setImgList: (fileList: string[]) => [],
   filePath: '',
   setFilePath: (filePath: string) => '',
-  onNext: () => Promise.resolve(),
-  onPrevious: () => Promise.resolve(),
-  onTrash: () => Promise.resolve(),
   onMoveFile: (destinationPath: string) => Promise.resolve(),
+  removeIndexFromState: (index: number) => Promise.resolve(),
   onClickOpen: () => Promise.resolve(),
   getFilesFromPath: (_e: Event, folderPath: string) => Promise.resolve(),
 });
@@ -30,10 +26,12 @@ export const GalleryContextProvider = (props: {
   const [folderPath, setFolderPath] = useState('');
   const [filePath, setFilePath] = useState<string>('');
   const [fileList, setImgList] = useState<string[]>([]);
-  const [logItems, setLogItems] = useState<LogItem[]>([]);
   const [sortedImages, setSortedImages] = useState<number>(0);
 
-  const removeImageFromState = useCallback(
+  const logContext = useContext<LogContextInterface>(LogContext);
+  const { getLogItems } = logContext;
+
+  const removeIndexFromState = useCallback(
     async (index: number) => {
       const newList = await myAPI.readdir(folderPath);
 
@@ -59,6 +57,7 @@ export const GalleryContextProvider = (props: {
     setFolderPath(folderPath);
 
     const files = await myAPI.readdir(folderPath);
+
     if (!files || files.length === 0) {
       window.location.reload();
 
@@ -80,31 +79,6 @@ export const GalleryContextProvider = (props: {
     }
   }, [fileList, filePath]);
 
-  const onPrevious = useCallback(async () => {
-    if (!filePath) return;
-
-    const index = fileList.indexOf(filePath);
-    if (index === 0) {
-      setFilePath(fileList[fileList.length - 1]);
-    } else if (index === -1) {
-      setFilePath(fileList[0]);
-    } else {
-      setFilePath(fileList[index - 1]);
-    }
-  }, [fileList, filePath]);
-
-  const onTrash = useCallback(async () => {
-    if (!fileList || fileList.length === 0) {
-      window.location.reload();
-      return;
-    }
-
-    const index = fileList.indexOf(filePath);
-
-    await myAPI.moveToTrash(filePath);
-    await removeImageFromState(index);
-  }, [fileList, filePath, removeImageFromState]);
-
   const onClickOpen = useCallback(async () => {
     const folderPath = await myAPI.openDialog();
     if (!folderPath) return;
@@ -124,39 +98,27 @@ export const GalleryContextProvider = (props: {
     Promise.all([
       myAPI.moveFile(filePath, destinationPath),
       getLogItems(),
-      removeImageFromState(index),
-    ]);
-
-    setSortedImages(sortedImages + 1);
-    onNext();
-  };
-
-  const getLogItems = async (): Promise<LogItem[]> => {
-    const logItems: LogItem[] = await myAPI.getLogItems();
-    setLogItems(logItems.reverse());
-
-    return logItems;
+      removeIndexFromState(index),
+    ]).then(() => {
+      setSortedImages(sortedImages + 1);
+      onNext();
+    });
   };
 
   return (
     <GalleryContext.Provider
       value={{
-        filePath: filePath,
-        setFilePath: setFilePath,
+        filePath,
+        setFilePath,
         fileList,
         setImgList,
         folderPath,
         setFolderPath,
-        logItems,
-        setLogItems,
-        getLogItems,
         sortedImages,
         setSortedImages,
-        onNext,
-        onPrevious,
         onClickOpen,
         getFilesFromPath,
-        onTrash,
+        removeIndexFromState,
         onMoveFile,
       }}>
       {props.children}

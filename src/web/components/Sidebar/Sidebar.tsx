@@ -1,17 +1,13 @@
-import { memo, useContext, useEffect } from 'react';
-import { GalleryContext } from '../../providers/GalleryContext';
+import { memo, useContext } from 'react';
+import { GalleryContext, LogContextProvider } from '../../providers';
 import { Card } from '../Card/Card';
 import KeyMapList from './KeyMapList/KeyMapList';
 import { Log } from './Log/Log';
-import { GalleryContextInterface } from 'types/index';
+import { GalleryContextInterface } from '@types';
 
 export const Sidebar = memo(() => {
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
-  const { logItems, getLogItems, sortedImages } = galleryContext;
-
-  useEffect(() => {
-    getLogItems();
-  }, [getLogItems, sortedImages]);
+  const { sortedImages } = galleryContext;
 
   return (
     <div className="col-sm-3 d-none d-sm-none d-md-block h-100">
@@ -27,7 +23,9 @@ export const Sidebar = memo(() => {
         <KeyMapList />
       </div>
       <div className="row h-40">
-        <Log logItems={logItems} />
+        <LogContextProvider>
+          <Log />
+        </LogContextProvider>
       </div>
     </div>
   );

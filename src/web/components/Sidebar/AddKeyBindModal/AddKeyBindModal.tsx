@@ -4,7 +4,7 @@ import 'mousetrap/plugins/record/mousetrap-record';
 import { Accelerator } from '../Accelerator/Accelerator';
 import { KeyBindContext } from '../../../providers/KeyBindContext';
 import { Modal } from '../../Modal/Modal';
-import { KeyBindContextInterface } from 'types/index';
+import { KeyBindContextInterface } from '@types';
 import './AddKeyBindModal.scss';
 
 const { myAPI } = window;
@@ -17,9 +17,9 @@ interface Props {
 export const AddKeyBindModal = (props: Props) => {
   const { onClose, onSubmit } = props;
   const recorderRef = useRef<HTMLTableCellElement>(null);
-  const [keyBind, setKeyBind] = useState<KeyBindType>();
   const keyBindContext = useContext<KeyBindContextInterface>(KeyBindContext);
   const { keyBinds, setKeyBinds, registerKeyBinds } = keyBindContext;
+  const [keyBind, setKeyBind] = useState<KeyBindType>();
 
   const handleAddKeyBind = useCallback(
     async (keyBind: KeyBindType): Promise<boolean> => {

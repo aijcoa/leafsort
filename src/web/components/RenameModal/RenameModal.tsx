@@ -1,9 +1,9 @@
 import { memo, useContext, useEffect, useRef, useState } from 'react';
 import { Modal } from '../Modal/Modal';
 import { getFileNameFromPath, trimExtension } from '../../helpers/helpers';
-import './RenameModal.scss';
 import { GalleryContext } from '../../providers';
-import { GalleryContextInterface, IElectronAPI } from 'types/index';
+import { GalleryContextInterface, IElectronAPI } from '@types';
+import './RenameModal.scss';
 
 interface Props {
   myAPI: IElectronAPI;
