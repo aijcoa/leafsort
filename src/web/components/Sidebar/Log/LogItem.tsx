@@ -27,9 +27,9 @@ export const LogItem = (props: Props) => {
     if (!operation.afterState || !operation.canBeUndone) return;
 
     Promise.all([
-      await myAPI.undoOperation(operation),
-      await getLogItems(),
-      await getFilesFromPath(null, folderPath),
+      myAPI.undoOperation(operation),
+      getLogItems(),
+      getFilesFromPath(null, folderPath),
     ]).catch((err) => console.error(err));
 
     sortedImages > 0 ?? setSortedImages(sortedImages - 1);

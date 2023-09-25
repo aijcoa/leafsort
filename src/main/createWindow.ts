@@ -1,24 +1,21 @@
 import { app, BrowserWindow, Menu, nativeTheme } from 'electron';
-
-import path from 'node:path';
-
 import { createMenu } from './createMenu';
 import { getResourceDirectory } from './shared/utils';
 import { registerMenuIPC } from './registerMenuIPC';
 import { store } from './main';
 import { registerUtilsIPC } from './registerUtilsIPC';
 import { registerKeyBindsIPC } from './registerKeyBindsIPC';
+import path from 'node:path';
 
 const isDarwin = process.platform === 'darwin';
 const isDevelop = process.env.NODE_ENV === 'development';
 
-// eslint-disable-next-line complexity
 export function createWindow(): BrowserWindow {
-  let openfile: string | null = null;
+  let openFile: string | null = null;
 
   const initWidth = 800;
   const initHeight = 528;
-  const dotfiles = isDarwin ? '.' : '._';
+  const dotFiles = isDarwin ? '.' : '._';
 
   const mainWindow = new BrowserWindow({
     show: false,
@@ -47,14 +44,14 @@ export function createWindow(): BrowserWindow {
   mainWindow.webContents.once('did-finish-load', () => {
     if (!isDarwin && process.argv.length >= 2) {
       const filePath = process.argv[process.argv.length - 1];
-      if (path.basename(filePath).startsWith(dotfiles)) return;
+      if (path.basename(filePath).startsWith(dotFiles)) return;
 
       mainWindow.webContents.send('menu-open', filePath);
     }
 
-    if (isDarwin && openfile) {
-      if (path.basename(openfile).startsWith(dotfiles)) {
-        openfile = null;
+    if (isDarwin && openFile) {
+      if (path.basename(openFile).startsWith(dotFiles)) {
+        openFile = null;
         return;
       }
 
@@ -70,7 +67,7 @@ export function createWindow(): BrowserWindow {
       if (mainWindow.isMinimized()) mainWindow.restore();
       mainWindow.focus();
 
-      if (path.basename(filePath).startsWith(dotfiles)) return;
+      if (path.basename(filePath).startsWith(dotFiles)) return;
 
       mainWindow.webContents.send('menu-open', filePath);
     });

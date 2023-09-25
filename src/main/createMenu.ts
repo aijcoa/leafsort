@@ -12,7 +12,7 @@ import path from 'node:path';
 import i18next from 'i18next';
 import Store from 'electron-store';
 import { store } from './main';
-import { Locale } from 'types/Locale';
+import { Locale } from '@types';
 
 const localeList: Locale[] = [
   { code: 'ar', value: 'اللغة العربية' },

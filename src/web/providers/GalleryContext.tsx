@@ -72,6 +72,7 @@ export const GalleryContextProvider = (props: {
     if (!filePath) return;
 
     const index = fileList.indexOf(filePath);
+
     if (index === fileList.length - 1 || index === -1) {
       setFilePath(fileList[0]);
     } else {
