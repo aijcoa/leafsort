@@ -1,4 +1,4 @@
-import { ReactNode, memo } from 'react';
+import { ReactNode, memo, useEffect } from 'react';
 
 interface Props {
   title: string;
@@ -21,6 +21,11 @@ export const Modal = memo((props: Props) => {
         break;
     }
   };
+  useEffect(() => {
+    return () => {
+      window.onkeydown = null;
+    };
+  }, []);
 
   return (
     <div className={'modal d-block'} onClick={onClose}>

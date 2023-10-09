@@ -43,13 +43,13 @@ export const AddKeyBindModal = (props: Props) => {
 
   const recordAccelerator = () => {
     Mousetrap.record((sequence: string[]) => {
-      if (sequence.toString() === 'enter') return;
+      if (sequence.toString().toLocaleUpperCase() === 'ENTER') return;
 
       setKeyBind({ ...keyBind, accelerator: sequence.join('+') });
     });
   };
 
-  const onClickOpen = useCallback(async () => {
+  const openFileDialog = useCallback(async () => {
     const destinationPath = await myAPI.openDialog();
 
     if (!destinationPath) return;
@@ -58,7 +58,7 @@ export const AddKeyBindModal = (props: Props) => {
   }, [keyBind]);
 
   const handleClose = useCallback(() => {
-    setKeyBind(undefined);
+    setKeyBind({});
     onClose();
   }, [onClose]);
 
@@ -70,6 +70,10 @@ export const AddKeyBindModal = (props: Props) => {
 
   useEffect(() => {
     recorderRef.current?.focus();
+
+    return () => {
+      Mousetrap.reset();
+    };
   }, []);
 
   return (
@@ -89,7 +93,7 @@ export const AddKeyBindModal = (props: Props) => {
                 {keyBind?.accelerator && <Accelerator accelerator={keyBind.accelerator} />}
               </div>
             </td>
-            <td className="select-path text-center" onClick={onClickOpen}>
+            <td className="select-path text-center" onClick={openFileDialog}>
               {keyBind?.path || 'SELECT PATH'}
             </td>
           </tr>
