@@ -30,7 +30,6 @@ const localeList: Locale[] = [
   { code: 'zh-TW', value: '繁体中文' },
 ];
 
-// @TODO fix complexity
 // eslint-disable-next-line complexity
 export const createMenu = (win: BrowserWindow, store: Store<StoreType>) => {
   const isDarwin = process.platform === 'darwin';

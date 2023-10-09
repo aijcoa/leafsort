@@ -19,13 +19,17 @@ export const KeyBindContextProvider = (props: {
 }): React.ReactElement => {
   const galleryContext = useContext<GalleryContextInterface>(GalleryContext);
   const { onMoveFile } = galleryContext;
-
   const [keyBinds, setKeyBinds] = useState<KeyBindType[]>([]);
 
   const getKeyBinds = useCallback(async (): Promise<KeyBindType[]> => {
-    const binds = await myAPI.getKeyBinds();
-    setKeyBinds(binds);
-    return binds;
+    try {
+      const binds = await myAPI.getKeyBinds();
+      setKeyBinds(binds);
+      return binds;
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
   }, []);
 
   const registerKeyBinds = useCallback(
@@ -36,7 +40,7 @@ export const KeyBindContextProvider = (props: {
             if (bind.path) await onMoveFile(bind.path);
           });
 
-          return false;
+          return;
         }
       });
     },

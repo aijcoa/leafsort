@@ -14,7 +14,7 @@ export const registerMenuIPC = (mainWindow: BrowserWindow) => {
         filters: [
           {
             name: i18next.t('Image files'),
-            extensions: ['bmp', 'gif', 'ico', 'jpg', 'jpeg', 'png', 'svg', 'webp'],
+            extensions: ['bmp', 'gif', 'ico', 'jpg', 'jpeg', 'png', 'svg', 'webm', 'webp'],
           },
         ],
       })

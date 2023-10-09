@@ -60,7 +60,6 @@ export const GalleryContextProvider = (props: {
 
     if (!files || files.length === 0) {
       window.location.reload();
-
       return;
     }
 
